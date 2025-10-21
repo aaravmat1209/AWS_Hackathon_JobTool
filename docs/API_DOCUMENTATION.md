@@ -1,6 +1,6 @@
-# ASU Job Search Assistant API Documentation
+# Job Search Assistant API Documentation
 
-An AI-powered job search and career guidance system that provides personalized job recommendations and career advice for ASU students using AWS Lambda Function URLs and Bedrock AgentCore.
+An AI-powered job search and career guidance system that provides personalized job recommendations and career advice for students using AWS Lambda Function URLs and Bedrock AgentCore.
 
 ## Architecture Overview
 
@@ -82,7 +82,7 @@ Purpose: Proxy requests to Bedrock AgentCore, bypassing Cognito session policy r
   "runtimeSessionId": "33+ character session identifier",
   "payload": {
     "prompt": "User's job search query or career question",
-    "email": "user@asu.edu (optional)",
+    "email": "user@abc.edu (optional)",
     "session_id": "33+ character session identifier",
     "source": "livesearch"
   }
@@ -122,7 +122,7 @@ Purpose: Proxy requests to Bedrock AgentCore, bypassing Cognito session policy r
 ```json
 {
   "prompt": "Enhanced job search query with user profile data",
-  "email": "user@asu.edu",
+  "email": "user@abc.edu",
   "session_id": "33+ character session identifier",
   "source": "livesearch" | "batch"
 }

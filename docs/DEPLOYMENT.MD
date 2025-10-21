@@ -3,7 +3,7 @@
 ## Common Prerequisites
 
 - Fork this repository to your own GitHub account (required for deployment and Frontend CI/CD):
-  1. Navigate to https://github.com/ASUCICREPO/Agentic-Job-Search.git
+  1. Navigate to this repository
   2. Click the "Fork" button in the top right corner
   3. Select your GitHub account as the destination
   4. Wait for the forking process to complete
