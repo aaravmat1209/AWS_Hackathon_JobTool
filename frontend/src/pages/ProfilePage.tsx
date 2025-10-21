@@ -2,6 +2,7 @@
 import React, { useState, useId } from "react";
 import { useNavigate } from "react-router-dom";
 import styled, { createGlobalStyle } from "styled-components";
+import { motion } from "framer-motion";
 import myProfileImage from '../assets/my_profile.png';
 import { uploadResumeAndParse, saveProfile, getProfile, ProfileData } from '../services/profileService';
 import { getUserEmail, setUserEmail } from '../utils/cookieUtils';
@@ -24,11 +25,16 @@ const GlobalStyle = createGlobalStyle`
 
   * { box-sizing: border-box; }
   html, body, #root { height: 100%; }
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
   body {
     margin: 0;
-    font-family: 'Poppins', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-    color: var(--ink-900);
-    background: var(--asu-gold);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+    color: white;
+    background: #000000;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
   }
 
   ::placeholder { color: #A6ACB2; opacity: 1; }
@@ -37,123 +43,100 @@ const GlobalStyle = createGlobalStyle`
 /* ------------------------------ Layout --------------------------------- */
 const Page = styled.div`
   min-height: 100vh;
-  padding: 40px 20px 72px;
-  background: linear-gradient(135deg, #FFC627 0%, #FFB000 100%);
+  padding: 140px 20px 72px;
+  background: #000000;
+  background-image: 
+    radial-gradient(circle at 20% 80%, rgba(74, 222, 128, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(74, 222, 128, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(74, 222, 128, 0.03) 0%, transparent 70%);
 `;
 
-const Header = styled.header`
+const Header = styled(motion.header)`
   max-width: 1100px;
-  margin: 0 auto 20px;
+  margin: 0 auto 40px;
+  text-align: center;
 `;
 
-const Title = styled.h1`
+const Title = styled(motion.h1)`
   margin: 0;
-  font-size: 2.25rem;
-  line-height: 1.2;
+  font-size: clamp(2rem, 5vw, 3rem);
+  line-height: 1.1;
   font-weight: 700;
-  letter-spacing: 0.2px;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 `;
 
-const DateText = styled.p`
-  margin: 6px 0 0;
-  color: var(--ink-500);
-  font-size: 0.95rem;
+const DateText = styled(motion.p)`
+  margin: 12px 0 0;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 1rem;
 `;
 
-/* ---------------------- Upload Resume announcement --------------------- */
-const UploadStrip = styled.section`
-  padding: 24px 64px;
-  background: linear-gradient(90deg, #FFF8E1 0%, #FFE082 50%, #FFC627 100%);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  @media (max-width: 720px){
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    gap: 14px;
-    padding: 18px 32px;
-  }
-`;
-
-const UploadLeft = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  flex: 1;
-  min-width: 0;
-`;
-
-const Mascot = styled.img`
-  width: 50px;
-  height: 71px;
-  flex: 0 0 auto;
-  /* PNG image rendering optimizations */
-  image-rendering: -webkit-optimize-contrast;
-  image-rendering: crisp-edges;
-  object-fit: contain;
-`;
-
-const UploadMessage = styled.p`
-  margin: 0;
-  font-size: 1.05rem;
-  font-weight: 600;
-  color: var(--ink-900);
-  text-wrap: balance;
-`;
-
-/* Hidden file input + visible button label */
+/* Hidden file input for resume upload */
 const HiddenFile = styled.input.attrs({ type: "file" })`
-  position: absolute !important;
-  width: 1px; height: 1px;
-  padding: 0; margin: -1px; overflow: hidden;
-  clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+  display: none;
 `;
 
-const UploadBtn = styled.label`
-  cursor: pointer;
-  background: #8C1D40;
-  color: #fff;
-  border: 0;
-  border-radius: 999px;
-  padding: 12px 24px;
-  font-weight: 600;
+const UploadButton = styled(motion.button)`
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  transition: background .2s ease;
+  gap: 8px;
+  padding: 10px 20px;
+  background: rgba(74, 222, 128, 0.1);
+  border: 1px solid rgba(74, 222, 128, 0.3);
+  border-radius: 8px;
+  color: #4ade80;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: 'Inter', sans-serif;
 
-  &:hover { background: #6d1730; }
-  
-  &:has(input:disabled) {
-    opacity: 0.6;
+  &:hover {
+    background: rgba(74, 222, 128, 0.15);
+    border-color: rgba(74, 222, 128, 0.5);
+    transform: translateY(-1px);
+  }
+
+  &:disabled {
+    opacity: 0.5;
     cursor: not-allowed;
-    pointer-events: none;
+    transform: none;
   }
 `;
 
 /* --------------------------- Profile section --------------------------- */
-const Card = styled.section`
+const Card = styled(motion.section)`
   max-width: 1100px;
   margin: 0 auto;
-  background: #fff;
-  border-radius: 16px;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(74, 222, 128, 0.2);
+  border-radius: 24px;
   overflow: hidden;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  position: relative;
+  z-index: 1;
 `;
 
 const ProfileSection = styled.div`
-  padding: 32px 64px 40px 64px;
+  padding: 40px 48px 48px 48px;
   
   @media (max-width: 720px){
-    padding: 24px 32px 32px 32px;
+    padding: 24px 20px 32px 20px;
   }
 `;
 
 const ProfileHeader = styled.div`
   text-align: center;
-  margin-bottom: 28px;
+  margin-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
 `;
 
 const Avatar = styled.div`
@@ -165,24 +148,27 @@ const Avatar = styled.div`
   background-position: center;
 `;
 
-const Heading = styled.h2`
+const Heading = styled(motion.h2)`
   margin: 0;
-  font-size: 1.9rem;
+  font-size: 1.875rem;
   font-weight: 700;
-  text-shadow: 0 2px 0 rgba(0,0,0,0.07);
+  color: white;
+  letter-spacing: -0.01em;
 `;
 
-const EditMessage = styled.div<{ $show: boolean }>`
-  margin-top: 8px;
-  margin-bottom: 20px;
-  padding: 12px 16px;
-  background: linear-gradient(135deg, #FFF8E1 0%, #FFE082 50%);
-  border: 1px solid var(--asu-gold);
+const EditMessage = styled(motion.div)<{ $show: boolean }>`
+  margin-bottom: 32px;
+  padding: 16px 20px;
+  background: linear-gradient(135deg, rgba(74, 222, 128, 0.1) 0%, rgba(74, 222, 128, 0.05) 100%);
+  border: 1px solid rgba(74, 222, 128, 0.3);
   border-radius: 12px;
-  font-size: 0.9rem;
-  color: var(--ink-700);
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.9);
   text-align: center;
-  display: ${props => props.$show ? 'block' : 'none'};
+  display: ${props => props.$show ? 'flex' : 'none'};
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
   animation: fadeIn 0.5s ease-in-out;
 
   @keyframes fadeIn {
@@ -191,99 +177,143 @@ const EditMessage = styled.div<{ $show: boolean }>`
   }
 
   &::before {
-    content: "✏️ ";
-    font-size: 1.1rem;
+    content: "✏️";
+    font-size: 1.25rem;
+  }
+`;
+
+const FormSection = styled.div`
+  margin-bottom: 32px;
+`;
+
+const SectionTitle = styled.h3`
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: white;
+  margin: 0 0 20px 0;
+  letter-spacing: -0.01em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  
+  &::before {
+    content: '';
+    width: 4px;
+    height: 20px;
+    background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%);
+    border-radius: 2px;
   }
 `;
 
 const Grid = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 26px 28px;
+  gap: 20px;
 
   @media (max-width: 900px){
     grid-template-columns: 1fr;
+    gap: 16px;
   }
 `;
 
-const Field = styled.div``;
+const Field = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+`;
 
 const Label = styled.label<{ $required?: boolean }>`
   display: block;
-  margin-bottom: 8px;
-  font-weight: 600;
-  color: var(--ink-700);
-  font-size: 0.98rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  letter-spacing: 0.01em;
 
   &::after {
     content: ${props => props.$required ? '" *"' : '""'};
-    color: #dc3545;
-    font-weight: 700;
+    color: #ef4444;
+    font-weight: 600;
+    margin-left: 2px;
   }
 `;
 
 const Input = styled.input`
   width: 100%;
-  padding: 12px 14px;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  font-size: 16px;
-  background: var(--surface-muted);
+  padding: 10px 12px;
+  border: 1px solid rgba(74, 222, 128, 0.2);
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 1.5;
+  background: rgba(0, 0, 0, 0.4);
+  color: white;
   outline: none;
-  transition: border-color .15s ease, box-shadow .15s ease, background .15s ease;
-  cursor: text;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: inherit;
 
   &:focus{
-    border-color: var(--asu-gold-dark);
-    box-shadow: 0 0 0 4px rgba(255, 198, 39, .25);
-    background: #fff;
+    border-color: #4ade80;
+    box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.1);
+    background: rgba(0, 0, 0, 0.6);
   }
 
   &:not(:disabled):hover {
-    border-color: var(--asu-gold);
-    background: #fff;
+    border-color: rgba(74, 222, 128, 0.4);
+    background: rgba(0, 0, 0, 0.5);
+  }
+
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.4);
   }
 
   &:disabled {
-    opacity: 0.6;
+    opacity: 0.5;
     cursor: not-allowed;
-    background: var(--surface-muted);
+    background: rgba(0, 0, 0, 0.3);
   }
 `;
 
 const TextArea = styled.textarea`
   width: 100%;
-  min-height: 104px;
-  padding: 12px 14px;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  font-size: 16px;
-  background: var(--surface-muted);
+  min-height: 100px;
+  padding: 10px 12px;
+  border: 1px solid rgba(74, 222, 128, 0.2);
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 1.5;
+  background: rgba(0, 0, 0, 0.4);
+  color: white;
   resize: vertical;
   outline: none;
-  transition: border-color .15s ease, box-shadow .15s ease, background .15s ease;
-  cursor: text;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: inherit;
 
   &:focus{
-    border-color: var(--asu-gold-dark);
-    box-shadow: 0 0 0 4px rgba(255, 198, 39, .25);
-    background: #fff;
+    border-color: #4ade80;
+    box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.1);
+    background: rgba(0, 0, 0, 0.6);
   }
 
   &:not(:disabled):hover {
-    border-color: var(--asu-gold);
-    background: #fff;
+    border-color: rgba(74, 222, 128, 0.4);
+    background: rgba(0, 0, 0, 0.5);
+  }
+
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.4);
   }
 
   &:disabled {
-    opacity: 0.6;
+    opacity: 0.5;
     cursor: not-allowed;
-    background: var(--surface-muted);
+    background: rgba(0, 0, 0, 0.3);
   }
 `;
 
 const NotificationAndButtonContainer = styled.div`
-  margin-top: 32px;
+  margin-top: 40px;
+  padding-top: 32px;
+  border-top: 1px solid rgba(74, 222, 128, 0.1);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -300,17 +330,20 @@ const NotificationContainer = styled.div`
 `;
 
 const NotificationSection = styled.div`
-  padding: 12px;
-  background: var(--surface-muted);
-  border-radius: 8px;
-  border: 1px solid var(--border);
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  border: 1px solid rgba(74, 222, 128, 0.2);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
 `;
 
 const NotificationTitle = styled.h3`
-  margin: 0 0 12px 0;
-  color: var(--ink-700);
-  font-size: 16px;
+  margin: 0 0 16px 0;
+  color: white;
+  font-size: 0.875rem;
   font-weight: 600;
+  letter-spacing: 0.01em;
 `;
 
 const RadioGroup = styled.div`
@@ -328,29 +361,31 @@ const RadioOption = styled.div`
 const RadioInput = styled.input`
   width: 16px;
   height: 16px;
-  accent-color: var(--asu-maroon);
+  accent-color: #4ade80;
 `;
 
 const RadioLabel = styled.label`
-  font-size: 13px;
-  color: var(--ink-700);
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.9);
   cursor: pointer;
+  line-height: 1.5;
 `;
 
 const CommunicationSection = styled.div<{ $show: boolean }>`
-  margin-top: 12px;
-  padding: 10px;
-  background: white;
-  border-radius: 6px;
-  border: 1px solid var(--border);
+  margin-top: 16px;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  border: 1px solid rgba(74, 222, 128, 0.15);
   display: ${props => props.$show ? 'block' : 'none'};
 `;
 
 const CommunicationTitle = styled.h4`
-  margin: 0 0 8px 0;
-  color: var(--ink-700);
-  font-size: 13px;
+  margin: 0 0 12px 0;
+  color: white;
+  font-size: 0.8125rem;
   font-weight: 600;
+  letter-spacing: 0.01em;
 `;
 
 const CheckboxGroup = styled.div`
@@ -368,13 +403,14 @@ const CheckboxOption = styled.div`
 const CheckboxInput = styled.input`
   width: 14px;
   height: 14px;
-  accent-color: var(--asu-maroon);
+  accent-color: #4ade80;
 `;
 
 const CheckboxLabel = styled.label`
-  font-size: 13px;
-  color: var(--ink-700);
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.9);
   cursor: pointer;
+  line-height: 1.5;
 `;
 
 const ValidationErrors = styled.div`
@@ -401,63 +437,73 @@ const ValidationErrors = styled.div`
   }
 `;
 
-const Proceed = styled.button`
+const Proceed = styled(motion.button)`
   margin: 0;
-  display: block;
-  background: var(--asu-maroon);
-  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%);
+  color: white;
   border: 0;
-  border-radius: 999px;
-  padding: 16px 48px;
-  font-size: 1.15rem;
-  font-weight: 700;
+  border-radius: 12px;
+  padding: 14px 40px;
+  font-size: 1rem;
+  font-weight: 600;
   cursor: pointer;
-  transition: transform .15s ease, background .2s ease, box-shadow .2s ease;
-  box-shadow: 0 12px 24px rgba(139, 21, 56, 0.3);
-  min-width: 200px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 16px rgba(74, 222, 128, 0.3);
+  min-width: 220px;
+  letter-spacing: 0.01em;
 
-  &:hover { background: var(--asu-maroon-dark); transform: translateY(-2px); }
-  &:active { transform: translateY(-1px); box-shadow: 0 8px 18px rgba(139,21,56,.22); }
+  &:hover { 
+    transform: translateY(-2px); 
+    box-shadow: 0 8px 24px rgba(74, 222, 128, 0.4);
+  }
+  &:active { 
+    transform: translateY(0); 
+    box-shadow: 0 4px 12px rgba(74, 222, 128, 0.3); 
+  }
 
   &:disabled {
-    opacity: 0.6;
+    opacity: 0.5;
     cursor: not-allowed;
     transform: none;
   }
 `;
 
 /* ----------------------------- Loading Modal ----------------------------- */
-const ModalOverlay = styled.div`
+const ModalOverlay = styled(motion.div)`
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.8);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
-  backdrop-filter: blur(4px);
+  backdrop-filter: blur(10px);
 `;
 
-const ModalContent = styled.div`
-  background: white;
-  border-radius: 20px;
+const ModalContent = styled(motion.div)`
+  background: rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(20px);
+  border-radius: 24px;
   padding: 40px;
   max-width: 400px;
   width: 90%;
   text-align: center;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-  border: 2px solid var(--asu-gold);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(74, 222, 128, 0.3);
 `;
 
-const LoadingIcon = styled.div`
+const LoadingIcon = styled(motion.div)`
   width: 60px;
   height: 60px;
   margin: 0 auto 20px;
-  border: 4px solid var(--asu-gold);
-  border-top: 4px solid var(--asu-maroon);
+  border: 4px solid rgba(74, 222, 128, 0.2);
+  border-top: 4px solid #4ade80;
   border-radius: 50%;
   animation: spin 1s linear infinite;
 
@@ -468,14 +514,14 @@ const LoadingIcon = styled.div`
 `;
 
 const ModalTitle = styled.h3`
-  color: var(--asu-maroon);
+  color: #4ade80;
   margin: 0 0 10px;
   font-size: 1.4rem;
   font-weight: 700;
 `;
 
 const ModalMessage = styled.p`
-  color: var(--ink-700);
+  color: rgba(255, 255, 255, 0.8);
   margin: 0;
   font-size: 1rem;
   line-height: 1.5;
@@ -681,8 +727,17 @@ const ProfilePage: React.FC = () => {
 
       {/* Loading Modal */}
       {(isUploading || isSaving || isLoadingProfile) && (
-        <ModalOverlay>
-          <ModalContent>
+        <ModalOverlay
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+        >
+          <ModalContent
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.8, opacity: 0 }}
+            transition={{ type: "spring", stiffness: 200, damping: 20 }}
+          >
             <LoadingIcon />
             <ModalTitle>
               {isLoadingProfile ? 'Loading Your Profile' :
@@ -700,36 +755,52 @@ const ProfilePage: React.FC = () => {
       )}
 
       <Page>
-        <Header>
-          <Title>Welcome to ASU Job Search!</Title>
-          <DateText>{new Date().toLocaleDateString(undefined, {
-            weekday: "short", day: "2-digit", month: "long", year: "numeric"
-          })}</DateText>
+        <Header
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <Title
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+          >
+            Welcome to JobSearch AI!
+          </Title>
+          <DateText
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+          >
+            {new Date().toLocaleDateString(undefined, {
+              weekday: "short", day: "2-digit", month: "long", year: "numeric"
+            })}
+          </DateText>
         </Header>
 
         {/* Upload announcement strip */}
         {/* Combined Profile card with upload section */}
-        <Card>
-          <UploadStrip>
-            <UploadLeft>
-              <div style={{ fontSize: '50px', width: '50px', height: '71px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>🤖</div>
-              <UploadMessage>
-                I will help you set up your profile. Just upload your resume!
-              </UploadMessage>
-            </UploadLeft>
-
-            <div>
-              <HiddenFile id={fileInputId} accept=".pdf,.doc,.docx" onChange={handleResume} disabled={isUploading || isSaving || isLoadingProfile}/>
-              <UploadBtn htmlFor={fileInputId} role="button" aria-label="Upload Resume">
-                {isUploading ? '🔄 Processing Resume...' : 'Upload Resume'}
-              </UploadBtn>
-            </div>
-          </UploadStrip>
+        <Card
+          initial={{ opacity: 0, y: 40, scale: 0.95 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.8, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+        >
 
           <ProfileSection>
             <ProfileHeader>
               <Avatar aria-hidden></Avatar>
               <Heading>My Profile</Heading>
+              <HiddenFile id={fileInputId} accept=".pdf,.doc,.docx" onChange={handleResume} disabled={isUploading || isSaving || isLoadingProfile}/>
+              <UploadButton
+                as="label"
+                htmlFor={fileInputId}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                disabled={isUploading || isSaving || isLoadingProfile}
+              >
+                <span>📄</span>
+                {isUploading ? 'Processing Resume...' : 'Upload Resume'}
+              </UploadButton>
             </ProfileHeader>
 
             <EditMessage $show={dataAutoFilled}>
@@ -905,7 +976,12 @@ const ProfilePage: React.FC = () => {
               </ValidationErrors>
             )}
 
-            <Proceed onClick={handleSaveProfile} disabled={isUploading || isSaving || isLoadingProfile || validationErrors.length > 0 || (formData.optInStatus === true && !hasValidCommunicationMethod())}>
+            <Proceed 
+              onClick={handleSaveProfile} 
+              disabled={isUploading || isSaving || isLoadingProfile || validationErrors.length > 0 || (formData.optInStatus === true && !hasValidCommunicationMethod())}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
               {isSaving ? '💾 Saving Profile...' : 'Proceed to Job Search'}
             </Proceed>
           </NotificationAndButtonContainer>

@@ -3,9 +3,14 @@
  * Showcases the AI Job Search solution with hero section, features, and tech stack
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import Header from '../components/Header';
+import Hero from '../components/Hero';
+import TiltCardSection from '../components/TiltCardSection';
+import AIFeatures from '../components/AIFeatures';
+import Footer from '../components/Footer';
 import {
   BedrockIcon,
   LambdaIcon,
@@ -23,8 +28,13 @@ import {
 
 const PageContainer = styled.div`
   min-height: 100vh;
-  background: #FFFFFF;
+  background: #000000;
+  background-image: 
+    radial-gradient(circle at 20% 80%, rgba(74, 222, 128, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(74, 222, 128, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(74, 222, 128, 0.03) 0%, transparent 70%);
   overflow-x: hidden;
+  position: relative;
 `;
 
 const HeroSection = styled.section`
@@ -197,7 +207,7 @@ const TeardropSection = styled.section`
 const SectionTitle = styled.h2`
   font-size: 3.5rem;
   font-weight: 800;
-  color: #000000;
+  color: #FFFFFF;
   margin: 0 0 24px 0;
   text-align: center;
   font-family: 'Titillium Web', 'Inter', sans-serif;
@@ -215,7 +225,7 @@ const SectionTitle = styled.h2`
 
 const SectionSubtitle = styled.p`
   font-size: 1.125rem;
-  color: rgba(0, 0, 0, 0.88);
+  color: rgba(255, 255, 255, 0.8);
   text-align: center;
   margin: 0 0 60px 0;
   max-width: 700px;
@@ -332,16 +342,14 @@ const FeatureBullet = styled.li`
 
 const TechStackSection = styled.section`
   padding: 80px 50px;
-  background: #F9FAFB;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: 60px;
   margin: 40px auto;
   max-width: 1400px;
   position: relative;
   overflow: hidden;
-  opacity: 0;
-  transform: translateY(40px);
-  animation: fadeInUp 0.8s ease-out forwards;
-  animation-delay: 0.3s;
+  backdrop-filter: blur(20px);
   
   &::before {
     content: '';
@@ -351,8 +359,8 @@ const TechStackSection = styled.section`
     right: 0;
     bottom: 0;
     background-image: 
-      radial-gradient(circle at 10% 20%, rgba(0, 240, 160, 0.03) 0%, transparent 50%),
-      radial-gradient(circle at 90% 80%, rgba(0, 240, 160, 0.03) 0%, transparent 50%);
+      radial-gradient(circle at 10% 20%, rgba(74, 222, 128, 0.05) 0%, transparent 50%),
+      radial-gradient(circle at 90% 80%, rgba(74, 222, 128, 0.05) 0%, transparent 50%);
     pointer-events: none;
   }
   
@@ -413,8 +421,9 @@ const TechIcon = styled.div`
   flex-shrink: 0;
   border-radius: 50%;
   overflow: hidden;
-  background: #FFFFFF;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   
   img {
     border-radius: 50%;
@@ -430,7 +439,7 @@ const TechInfo = styled.div`
 const TechName = styled.h4`
   font-size: 0.875rem;
   font-weight: 600;
-  color: #000000;
+  color: #FFFFFF;
   margin: 0;
   font-family: 'Inter', sans-serif;
   line-height: 1.2;
@@ -438,7 +447,7 @@ const TechName = styled.h4`
 
 const TechDescription = styled.p`
   font-size: 0.75rem;
-  color: rgba(0, 0, 0, 0.6);
+  color: rgba(255, 255, 255, 0.6);
   margin: 0;
   line-height: 1.3;
 `;
@@ -559,126 +568,17 @@ const HomePage: React.FC = () => {
 
   return (
     <PageContainer>
-      {/* Hero Section */}
-      <HeroSection>
-        <HeroContent>
-          <HeroTitle>
-            No More Solo Job Hunting
-            <HeroHighlight>Do it with AI Copilot</HeroHighlight>
-          </HeroTitle>
-          <HeroSubtitle>
-            Our AI makes landing job interviews dramatically easier and faster! Get matched jobs, 
-            tailored resume analysis, and personalized career guidance powered by AWS and advanced AI.
-          </HeroSubtitle>
-          <CTAButton onClick={() => navigate('/profile')}>
-            Get Started for Free
-          </CTAButton>
-        </HeroContent>
-      </HeroSection>
+      {/* New Dark-Themed Header */}
+      <Header />
 
-      {/* Stats Section */}
-      <Section>
-        <StatsSection>
-          <StatCard>
-            <StatNumber>80%</StatNumber>
-            <StatLabel>Time Saved</StatLabel>
-          </StatCard>
-          <StatCard>
-            <StatNumber>4x</StatNumber>
-            <StatLabel>More Interviews</StatLabel>
-          </StatCard>
-          <StatCard>
-            <StatNumber>24/7</StatNumber>
-            <StatLabel>AI Support</StatLabel>
-          </StatCard>
-        </StatsSection>
-      </Section>
+      {/* New Dark-Themed Hero Section */}
+      <Hero />
 
-      {/* AI Features Section */}
-      <TeardropSection>
-        <SectionTitle>AI-Powered Features</SectionTitle>
-        <SectionSubtitle>
-          Everything you need to land your dream job, powered by cutting-edge AI
-        </SectionSubtitle>
-        
-        <FeaturesGrid>
-          <FeatureCard>
-            <FeatureHeader>
-              <FeatureIcon>✨</FeatureIcon>
-              <FeatureTitleWrapper>
-                <FeatureTitle>AI Job Match</FeatureTitle>
-                <FeatureSlash>/</FeatureSlash>
-                <FeatureDescription>
-                  Job searching is already hard! Increase your odds with AI matched Jobs
-                </FeatureDescription>
-              </FeatureTitleWrapper>
-            </FeatureHeader>
-            <FeatureBullets>
-              <FeatureBullet>Apply only to jobs you are qualified for</FeatureBullet>
-              <FeatureBullet>Discover matched jobs based on your skills, not only titles</FeatureBullet>
-              <FeatureBullet>Say goodbye to fake jobs</FeatureBullet>
-              <FeatureBullet>Apply early with our custom job alerts</FeatureBullet>
-            </FeatureBullets>
-          </FeatureCard>
+      {/* Tilt Card Features Section */}
+      <TiltCardSection />
 
-          <FeatureCard>
-            <FeatureHeader>
-              <FeatureIcon>📄</FeatureIcon>
-              <FeatureTitleWrapper>
-                <FeatureTitle>Resume AI</FeatureTitle>
-                <FeatureSlash>/</FeatureSlash>
-                <FeatureDescription>
-                  Stand out from the crowd with a top notch resume
-                </FeatureDescription>
-              </FeatureTitleWrapper>
-            </FeatureHeader>
-            <FeatureBullets>
-              <FeatureBullet>Get personalized resume recommendations</FeatureBullet>
-              <FeatureBullet>Know exactly what recruiters want and what you're missing</FeatureBullet>
-              <FeatureBullet>Highlight your strengths effectively</FeatureBullet>
-              <FeatureBullet>Make your resume ATS compatible</FeatureBullet>
-            </FeatureBullets>
-          </FeatureCard>
-
-          <FeatureCard>
-            <FeatureHeader>
-              <FeatureIcon>🤝</FeatureIcon>
-              <FeatureTitleWrapper>
-                <FeatureTitle>Insider Connections</FeatureTitle>
-                <FeatureSlash>/</FeatureSlash>
-                <FeatureDescription>
-                  Network like a pro with recommended connections
-                </FeatureDescription>
-              </FeatureTitleWrapper>
-            </FeatureHeader>
-            <FeatureBullets>
-              <FeatureBullet>Increase interview chances by up to 4x with referrals</FeatureBullet>
-              <FeatureBullet>Connect with people in your target companies</FeatureBullet>
-              <FeatureBullet>Get personalized connection messages</FeatureBullet>
-              <FeatureBullet>Reach out to recruiters and decision-makers</FeatureBullet>
-            </FeatureBullets>
-          </FeatureCard>
-
-          <FeatureCard>
-            <FeatureHeader>
-              <FeatureIcon>💬</FeatureIcon>
-              <FeatureTitleWrapper>
-                <FeatureTitle>Orion, your AI Copilot</FeatureTitle>
-                <FeatureSlash>/</FeatureSlash>
-                <FeatureDescription>
-                  Chat with Orion for 24/7 genuine career support
-                </FeatureDescription>
-              </FeatureTitleWrapper>
-            </FeatureHeader>
-            <FeatureBullets>
-              <FeatureBullet>Get answers with a human touch of AI</FeatureBullet>
-              <FeatureBullet>Write or sync your interview notes</FeatureBullet>
-              <FeatureBullet>Experiment if you're a good fit for a role</FeatureBullet>
-              <FeatureBullet>Get AI-curated job search tips tailored to you</FeatureBullet>
-            </FeatureBullets>
-          </FeatureCard>
-        </FeaturesGrid>
-      </TeardropSection>
+      {/* New Dark-Themed AI Features with Chatbot Interface */}
+      <AIFeatures />
 
       {/* Tech Stack Section with Scrolling Animation */}
       <TechStackSection>
@@ -834,6 +734,9 @@ const HomePage: React.FC = () => {
           Start Your Journey Today
         </CTAButtonWhite>
       </CTASection>
+
+      {/* Footer */}
+      <Footer />
     </PageContainer>
   );
 };

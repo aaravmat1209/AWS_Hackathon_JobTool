@@ -1,6 +1,5 @@
 import React from 'react';
-import botAvatar from '../assets/bot-avatar.png';
-import userAvatar from '../assets/my_profile.png';
+import { User, Atom } from 'lucide-react';
 
 // Placeholder logo component - replace with actual logo later
 export const ASULogoImage: React.FC<{ className?: string }> = ({ className }) => (
@@ -22,29 +21,37 @@ export const ASULogoImage: React.FC<{ className?: string }> = ({ className }) =>
 );
 
 export const UserAvatarImage: React.FC<{ className?: string }> = ({ className }) => (
-  <img 
-    src={userAvatar} 
-    alt="User Avatar" 
+  <div 
     className={className} 
     style={{
       width: '40px',
       height: '40px',
       borderRadius: '50%',
-      objectFit: 'cover'
-    }} 
-  />
+      backgroundColor: 'rgba(255, 255, 255, 0.1)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      border: '1px solid rgba(255, 255, 255, 0.2)',
+    }}
+  >
+    <User size={20} color="rgba(255, 255, 255, 0.8)" />
+  </div>
 );
 
 export const BotAvatarImage: React.FC<{ className?: string }> = ({ className }) => (
-  <img 
-    src={botAvatar} 
-    alt="Bot Avatar" 
+  <div 
     className={className} 
     style={{
       width: '40px',
       height: '40px',
       borderRadius: '50%',
-      objectFit: 'cover'
-    }} 
-  />
+      backgroundColor: 'rgba(74, 222, 128, 0.15)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      border: '1px solid rgba(74, 222, 128, 0.3)',
+    }}
+  >
+    <Atom size={20} color="#4ade80" />
+  </div>
 );

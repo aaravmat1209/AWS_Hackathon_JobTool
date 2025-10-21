@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import { ASULogoImage, UserAvatarImage, BotAvatarImage } from '../components/ImageAssets';
+import { Mic, Send } from 'lucide-react';
 import { invokeAgent } from '../services/agentService';
 import { getJobRecommendations, parseSmsLinkParams } from '../services/jobRecommendationsService';
 import { getProfile } from '../services/profileService';
@@ -27,7 +28,9 @@ import {
   SourcesToggleButton,
   SourcesContainer,
   SourcesList,
-  SourceLink
+  SourceLink,
+  InputHelperText,
+  IconButton
 } from './ChatBotPage.styles';
 
 
@@ -847,18 +850,25 @@ const ChatBotPage: React.FC = () => {
                 <InputWrapper>
                     <Input
                         type="text"
-                        placeholder={messages.length === 0 ? "Ask me about jobs, internships, or career advice..." : "Type your message..."}
+                        placeholder="How can I help you today?"
                         value={inputValue}
                         onChange={(e) => setInputValue(e.target.value)}
                         onKeyPress={handleKeyPress}
                     />
+                    <IconButton title="Voice input">
+                        <Mic size={18} />
+                    </IconButton>
                     <SendButton
                         onClick={handleSendMessage}
                         disabled={!inputValue.trim() || isTyping || !isProcessingComplete}
+                        title="Send message"
                     >
-                        ➤
+                        <Send size={16} />
                     </SendButton>
                 </InputWrapper>
+                <InputHelperText>
+                    Press <kbd>Enter</kbd> to send · <kbd>Shift</kbd>+<kbd>Enter</kbd> for newline
+                </InputHelperText>
             </InputContainer>
         </ChatContainer>
     );

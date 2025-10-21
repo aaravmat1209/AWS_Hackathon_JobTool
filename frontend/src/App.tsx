@@ -12,8 +12,8 @@ import './App.css';
 function AppContent() {
   const location = useLocation();
   
-  // Hide navigation on unsubscribe page
-  const showNavigation = !location.pathname.startsWith('/unsubscribe');
+  // Hide navigation on unsubscribe page and home page (HomePage has its own Header)
+  const showNavigation = !location.pathname.startsWith('/unsubscribe') && location.pathname !== '/';
 
   return (
     <>

@@ -4,7 +4,8 @@ export const ChatContainer = styled.div`
   height: 100vh;
   display: flex;
   flex-direction: column;
-  background: #f0f0f0;
+  background: #000000;
+  font-family: 'Inter', sans-serif;
 `;
 
 // ============================================================================
@@ -135,18 +136,27 @@ export const UserName = styled.span`
 export const ChatArea = styled.div`
   flex: 1;
   overflow-y: auto;
-  padding: 20px;
+  padding: 140px 80px 20px 80px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 24px;
   scroll-behavior: smooth;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  position: relative;
+  z-index: 1;
   
   /* Optimize scrolling performance */
   -webkit-overflow-scrolling: touch;
 
+  @media (max-width: 768px) {
+    padding: 140px 40px 20px 40px;
+  }
+
   @media (max-width: 480px) {
-    padding: 12px 0;
-    gap: 16px;
+    padding: 140px 20px 20px 20px;
+    gap: 20px;
   }
 `;
 
@@ -155,18 +165,19 @@ export const MessageContainer = styled.div<{ $isUser: boolean }>`
   justify-content: ${props => props.$isUser ? 'flex-end' : 'flex-start'};
   align-items: flex-start;
   gap: 10px;
+  position: relative;
+  z-index: 10;
 `;
 
 export const BotMessageWrapper = styled.div`
   display: flex;
   align-items: flex-start;
-  gap: 10px;
-  max-width: 65%;
+  gap: 12px;
+  max-width: 75%;
 
   @media (max-width: 480px) {
-    max-width: 100%;
-    width: 100%;
-    gap: 8px;
+    max-width: 85%;
+    gap: 10px;
   }
 `;
 
@@ -177,12 +188,14 @@ export const BotContentWrapper = styled.div`
 `;
 
 export const BotMessageBubble = styled.div`
-  background: linear-gradient(135deg, #FFF9C4 0%, #FFC627 100%);
-  padding: 15px 20px;
-  border-radius: 20px;
-  color: #333;
-  font-size: 0.95rem;
-  line-height: 1.4;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  padding: 14px 18px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.9375rem;
+  line-height: 1.6;
   position: relative;
   
   /* Smooth text rendering for streaming */
@@ -194,8 +207,7 @@ export const BotMessageBubble = styled.div`
 
   @media (max-width: 480px) {
     padding: 12px 16px;
-    font-size: 0.9rem;
-    margin: 0 12px;
+    font-size: 0.875rem;
   }
 `;
 
@@ -203,7 +215,11 @@ export const UserMessageWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  max-width: 60%;
+  max-width: 70%;
+
+  @media (max-width: 480px) {
+    max-width: 85%;
+  }
 `;
 
 export const UserAvatarContainer = styled.div`
@@ -211,38 +227,46 @@ export const UserAvatarContainer = styled.div`
 `;
 
 export const UserMessageBubble = styled.div`
-  background: linear-gradient(135deg, #e1bee7 0%, #b3e5fc 100%);
-  padding: 15px 20px;
-  border-radius: 20px;
-  color: #333;
-  font-size: 0.95rem;
-  line-height: 1.4;
-  margin-bottom: 5px;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 14px 18px;
+  border-radius: 12px;
+  color: #000000;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  margin-bottom: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  @media (max-width: 480px) {
+    padding: 12px 16px;
+    font-size: 0.875rem;
+  }
 `;
 
 export const Timestamp = styled.div`
-  font-size: 0.8rem;
-  color: #666;
-  margin-top: 5px;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.4);
+  margin-top: 4px;
+  display: none;
 `;
 
 export const InputContainer = styled.div`
-  padding: 20px 80px 50px 80px;
-  background: #f0f0f0;
+  padding: 20px 80px 40px 80px;
+  background: #000000;
   display: flex;
-  align-items: center;
-  gap: 10px;
+  flex-direction: column;
+  gap: 0;
   max-width: 1200px;
   margin: 0 auto;
   width: 100%;
   box-sizing: border-box;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
 
   @media (max-width: 768px) {
-    padding: 20px 40px 40px 40px;
+    padding: 20px 40px 30px 40px;
   }
 
   @media (max-width: 480px) {
-    padding: 20px 25px 30px 25px;
+    padding: 16px 20px 24px 20px;
   }
 `;
 
@@ -251,97 +275,93 @@ export const InputWrapper = styled.div`
   position: relative;
   display: flex;
   align-items: center;
-  border: 2px solid #8B1538;
-  border-radius: 25px;
-  padding: 5px;
-  background: white;
-  box-shadow: 0 2px 8px rgba(139, 21, 56, 0.1);
-  transition: all 0.2s ease;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: 4px 4px 4px 16px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 
   &:focus-within {
-    border-color: #6d1028;
-    box-shadow: 0 4px 12px rgba(139, 21, 56, 0.2);
-    transform: translateY(-1px);
+    border-color: rgba(74, 222, 128, 0.5);
+    background: rgba(255, 255, 255, 0.08);
   }
 `;
 
 export const Input = styled.input`
   flex: 1;
-  padding: 12px 18px;
+  padding: 12px 8px;
   border: none;
   outline: none;
-  font-size: 1rem;
+  font-size: 0.9375rem;
   background: transparent;
-  color: #333;
+  color: rgba(255, 255, 255, 0.9);
   font-weight: 400;
+  font-family: 'Inter', sans-serif;
 
   &::placeholder {
-    color: #999;
-    font-style: italic;
+    color: rgba(255, 255, 255, 0.4);
   }
 
   &:focus {
-    color: #333;
+    color: white;
   }
 `;
 
 export const SendButton = styled.button`
-  background: #8B1538;
-  color: white;
+  background: rgba(74, 222, 128, 0.15);
+  color: #4ade80;
   border: none;
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.2rem;
-  transition: all 0.2s ease;
-  box-shadow: 0 2px 4px rgba(139, 21, 56, 0.3);
+  font-size: 1.1rem;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 
   &:hover {
-    background: #6d0f2a;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 8px rgba(139, 21, 56, 0.4);
+    background: rgba(74, 222, 128, 0.25);
   }
 
   &:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 4px rgba(139, 21, 56, 0.3);
+    transform: scale(0.95);
   }
 
   &:disabled {
-    background: #ccc;
+    background: rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.3);
     cursor: not-allowed;
-    transform: none;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
 `;
 
 export const TypingIndicator = styled.div`
   display: flex;
   align-items: center;
-  gap: 5px;
-  padding: 15px 20px;
-  background: linear-gradient(135deg, #FFF9C4 0%, #FFC627 100%);
-  border-radius: 20px;
-  max-width: 65%;
+  gap: 6px;
+  padding: 14px 18px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  max-width: 75%;
 `;
 
 export const TypingDot = styled.div`
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
-  background: #333;
+  background: rgba(255, 255, 255, 0.6);
   animation: typing 1.4s infinite ease-in-out;
 
   &:nth-child(1) { animation-delay: -0.32s; }
   &:nth-child(2) { animation-delay: -0.16s; }
 
   @keyframes typing {
-    0%, 80%, 100% { transform: scale(0); }
-    40% { transform: scale(1); }
+    0%, 80%, 100% { transform: scale(0); opacity: 0.3; }
+    40% { transform: scale(1); opacity: 1; }
   }
 `;
 
@@ -487,5 +507,44 @@ export const SourceLink = styled.a`
   &:focus {
     outline: 2px solid #3498db;
     outline-offset: 2px;
+  }
+`;
+
+export const InputHelperText = styled.div`
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.4);
+  text-align: left;
+  width: 100%;
+  margin-top: 8px;
+  padding-left: 16px;
+  
+  kbd {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: 'Inter', monospace;
+    font-size: 0.7rem;
+    margin: 0 2px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+`;
+
+export const IconButton = styled.button`
+  background: transparent;
+  color: rgba(255, 255, 255, 0.5);
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-right: 4px;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.7);
   }
 `;
