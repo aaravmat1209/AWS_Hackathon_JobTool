@@ -7,8 +7,8 @@ A comprehensive, intelligent job search assistant that empowers students with pe
 ## 🎥 Demo Video
 
 <p align="center">
-  <a href="[https://www.youtube.com/watch?v=4EIM9nCceco](https://youtu.be/px88H214UV4)">
-    <img src="https://markdown-videos-api.jorgenkh.no/youtube/4EIM9nCceco?width=640&height=360&filetype=jpeg" alt="Demo Video"/>
+  <a href="https://youtu.be/px88H214UV4">
+    <img src="https://markdown-videos-api.jorgenkh.no/youtube/px88H214UV4?width=640&height=360&filetype=jpeg" alt="Demo Video"/>
   </a>
 </p>
 
