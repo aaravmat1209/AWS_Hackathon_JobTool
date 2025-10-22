@@ -20,6 +20,8 @@ This application combines natural language processing capabilities with intellig
 ## 🏗️ Architecture
 
 The application implements a serverless, event-driven architecture with a multi-agent AI system at its core, combining real-time user interactions with automated batch processing for job matching.
+<img width="1451" height="1579" alt="JOB SEARCH ARCHITECTURE DIAGRAM drawio" src="https://github.com/user-attachments/assets/c3e3a995-07db-43f9-88f7-6fcd9af1a264" />
+
 
 ### Core Components
 
