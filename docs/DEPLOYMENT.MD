@@ -47,7 +47,7 @@
 
 2. Clone the repository (Make sure to have your own forked copy of the repo and replace the link with the forked repository link):
 ```bash
-git clone https://github.com/<YOUR-USERNAME>/Agentic-Job-Search && cd Agentic-Job-Search/
+git clone https://github.com/<YOUR-USERNAME>/AWS_Hackathon_JobTool && cd AWS_Hackathon_JobTool/
 ```
 
 3. Deploy using the deployment script (recommended):
@@ -90,8 +90,8 @@ The script would prompt you for variables needed for deployment.
 
 1. Clone the repository (Make sure to fork the repository first):
 ```bash
-git clone https://github.com/<YOUR-USERNAME>/Agentic-Job-Search
-cd Agentic-Job-Search/
+git clone https://github.com/<YOUR-USERNAME>/AWS_Hackathon_JobTool
+cd AWS_Hackathon_JobTool/
 ```
 
 2. **Set Up Your Environment**:
