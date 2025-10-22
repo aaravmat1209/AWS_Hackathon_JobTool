@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import { ASULogoImage, UserAvatarImage, BotAvatarImage } from '../components/ImageAssets';
-import { Home, User } from 'lucide-react';
+import { Home, User, Send } from 'lucide-react';
 import { invokeAgent } from '../services/agentService';
 import { getJobRecommendations, parseSmsLinkParams } from '../services/jobRecommendationsService';
 import { getProfile } from '../services/profileService';
@@ -32,7 +32,20 @@ import {
   InputHelperText,
   IconButton,
   NavButtonsContainer,
-  NavButton
+  NavButton,
+  WelcomeContainer,
+  WelcomeHeader,
+  WelcomeTitle,
+  WelcomeSubtitle,
+  SuggestionsContainer,
+  SuggestionCard,
+  SuggestionIcon,
+  SuggestionTitle,
+  SuggestionDescription,
+  MainInputContainer,
+  MainInputWrapper,
+  MainInput,
+  MainSendButton
 } from './ChatBotPage.styles';
 
 
@@ -144,7 +157,7 @@ const convertS3ToPublicUrl = (url: string): string => {
 const ChatBotPage: React.FC = () => {
     const location = useLocation();
     const navigate = useNavigate();
-    const [userName, setUserName] = useState<string>(location.state?.userName || "User");
+    const [userName, setUserName] = useState<string>("User");
     
     const [messages, setMessages] = useState<Message[]>([]);
     const [inputValue, setInputValue] = useState('');
@@ -161,6 +174,92 @@ const ChatBotPage: React.FC = () => {
     const [jobResultsReceived, setJobResultsReceived] = useState(false); // Track if job results were received
     const [hasStartedConversation, setHasStartedConversation] = useState(false); // Track if user has started conversation
     const chatAreaRef = useRef<HTMLDivElement>(null);
+
+    // Suggestion data for the welcome screen
+    const suggestions = [
+        {
+            icon: "💼",
+            title: "Find Job Opportunities",
+            description: "Search for jobs that match your skills and experience",
+            query: "Find me job opportunities in my field"
+        },
+        {
+            icon: "📝",
+            title: "Resume Review",
+            description: "Get feedback on your resume and improve it",
+            query: "Can you review my resume and give me feedback?"
+        },
+        {
+            icon: "🎯",
+            title: "Career Guidance",
+            description: "Get personalized career advice and next steps",
+            query: "What career advice do you have for me?"
+        },
+        {
+            icon: "💡",
+            title: "Interview Preparation",
+            description: "Practice interview questions and get tips",
+            query: "Help me prepare for job interviews"
+        },
+        {
+            icon: "🚀",
+            title: "Skill Development",
+            description: "Learn about skills to advance your career",
+            query: "What skills should I develop for my career?"
+        },
+        {
+            icon: "🌟",
+            title: "Industry Insights",
+            description: "Get insights about your industry and trends",
+            query: "Tell me about current trends in my industry"
+        }
+    ];
+
+    // Load user profile on component mount
+    useEffect(() => {
+        const loadUserProfile = async () => {
+            try {
+                // Try multiple sources for user name
+                let foundUserName = null;
+                
+                // 1. Check if passed via navigation state
+                if (location.state?.userName && location.state.userName !== 'User') {
+                    foundUserName = location.state.userName;
+                }
+                
+                // 2. Try to get from profile using email
+                if (!foundUserName) {
+                    const email = localStorage.getItem('userEmail') || location.state?.email;
+                    if (email) {
+                        const profile = await getProfile(email);
+                        if (profile && profile.fullName && profile.fullName !== 'N/A' && profile.fullName.trim() !== '') {
+                            foundUserName = profile.fullName;
+                        }
+                    }
+                }
+                
+                // 3. Check localStorage for cached user name
+                if (!foundUserName) {
+                    const cachedUserName = localStorage.getItem('userName');
+                    if (cachedUserName && cachedUserName !== 'User' && cachedUserName.trim() !== '') {
+                        foundUserName = cachedUserName;
+                    }
+                }
+                
+                // Set the user name (will remain "User" if nothing found)
+                if (foundUserName) {
+                    setUserName(foundUserName);
+                    // Cache it for future use
+                    localStorage.setItem('userName', foundUserName);
+                }
+            } catch (error) {
+                console.error('Failed to load user profile:', error);
+                // Continue with default "User"
+            }
+        };
+
+        loadUserProfile();
+    }, [location.state?.email, location.state?.userName]);
 
     // Auto-scroll functionality - disabled after job results until new query
     useEffect(() => {
@@ -199,8 +298,11 @@ const ChatBotPage: React.FC = () => {
                     if (recommendations.email) {
                         try {
                             const profile = await getProfile(recommendations.email);
-                            if (profile && profile.fullName && profile.fullName !== 'N/A') {
+                            if (profile && profile.fullName && profile.fullName !== 'N/A' && profile.fullName.trim() !== '') {
                                 setUserName(profile.fullName);
+                                // Cache it for future use
+                                localStorage.setItem('userName', profile.fullName);
+                                localStorage.setItem('userEmail', recommendations.email);
                             }
                         } catch (profileError) {
                             console.error('Failed to load user profile:', profileError);
@@ -274,7 +376,11 @@ const ChatBotPage: React.FC = () => {
     };
 
     const handleProfileClick = () => {
-        navigate('/', { state: { fromChatbot: true, userName: userName } });
+        navigate('/profile', { state: { fromChatbot: true, userName: userName } });
+    };
+
+    const handleSuggestionClick = (query: string) => {
+        handleSendMessage(query);
     };
 
 
@@ -292,10 +398,11 @@ const ChatBotPage: React.FC = () => {
 
 
 
-    const handleSendMessage = async () => {
-        if (!inputValue.trim()) return;
+    const handleSendMessage = async (customQuery?: string) => {
+        const queryToSend = customQuery || inputValue;
+        if (!queryToSend.trim()) return;
 
-        const currentInput = inputValue;
+        const currentInput = queryToSend;
         setInputValue('');
 
         // Mark that conversation has started - this triggers the smooth animation
@@ -711,6 +818,52 @@ const ChatBotPage: React.FC = () => {
                 </div>
             ) : (
                 <>
+                {/* Welcome Screen - shown when no conversation has started */}
+                {!hasStartedConversation && messages.length === 0 && (
+                    <WelcomeContainer>
+                        <WelcomeHeader>
+                            <WelcomeTitle>Hello {userName}! 👋</WelcomeTitle>
+                            <WelcomeSubtitle>
+                                I'm your AI career assistant. I can help you find jobs, improve your resume, 
+                                prepare for interviews, and provide personalized career guidance.
+                            </WelcomeSubtitle>
+                        </WelcomeHeader>
+
+                        <MainInputContainer $isLarge={true}>
+                            <MainInputWrapper $isLarge={true}>
+                                <MainInput
+                                    $isLarge={true}
+                                    type="text"
+                                    placeholder="Ask a question..."
+                                    value={inputValue}
+                                    onChange={(e) => setInputValue(e.target.value)}
+                                    onKeyPress={handleKeyPress}
+                                />
+                                <MainSendButton
+                                    $isLarge={true}
+                                    onClick={() => handleSendMessage()}
+                                    disabled={!isProcessingComplete}
+                                >
+                                    <Send />
+                                </MainSendButton>
+                            </MainInputWrapper>
+                        </MainInputContainer>
+                        
+                        <SuggestionsContainer>
+                            {suggestions.map((suggestion, index) => (
+                                <SuggestionCard
+                                    key={index}
+                                    onClick={() => handleSuggestionClick(suggestion.query)}
+                                >
+                                    <SuggestionIcon>{suggestion.icon}</SuggestionIcon>
+                                    <SuggestionTitle>{suggestion.title}</SuggestionTitle>
+                                    <SuggestionDescription>{suggestion.description}</SuggestionDescription>
+                                </SuggestionCard>
+                            ))}
+                        </SuggestionsContainer>
+                    </WelcomeContainer>
+                )}
+
                 <ChatArea ref={chatAreaRef}>
                 {messages.length === 0 && !isTyping ? null : (
                     <>
@@ -865,27 +1018,36 @@ const ChatBotPage: React.FC = () => {
             </>
             )}
 
-            <InputContainer $isCentered={!hasStartedConversation}>
-                <InputWrapper>
-                    <Input
-                        type="text"
-                        placeholder="Ask a question..."
-                        value={inputValue}
-                        onChange={(e) => setInputValue(e.target.value)}
-                        onKeyPress={handleKeyPress}
-                    />
-                    <NavButtonsContainer>
-                        <NavButton onClick={() => navigate('/')}>
-                            <Home size={16} />
-                            Home
-                        </NavButton>
-                        <NavButton onClick={handleProfileClick}>
-                            <User size={16} />
-                            Profile
-                        </NavButton>
-                    </NavButtonsContainer>
-                </InputWrapper>
-            </InputContainer>
+            {/* Bottom Input Container - only shown after conversation starts */}
+            {hasStartedConversation && (
+                <InputContainer>
+                    <InputWrapper>
+                        <Input
+                            type="text"
+                            placeholder="Ask a question..."
+                            value={inputValue}
+                            onChange={(e) => setInputValue(e.target.value)}
+                            onKeyPress={handleKeyPress}
+                        />
+                        <SendButton
+                            onClick={() => handleSendMessage()}
+                            disabled={!isProcessingComplete}
+                        >
+                            <Send />
+                        </SendButton>
+                        <NavButtonsContainer>
+                            <NavButton onClick={() => navigate('/')}>
+                                <Home size={16} />
+                                Home
+                            </NavButton>
+                            <NavButton onClick={handleProfileClick}>
+                                <User size={16} />
+                                Profile
+                            </NavButton>
+                        </NavButtonsContainer>
+                    </InputWrapper>
+                </InputContainer>
+            )}
         </ChatContainer>
     );
 };

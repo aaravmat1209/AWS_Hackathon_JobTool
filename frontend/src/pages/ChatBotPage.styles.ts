@@ -136,7 +136,7 @@ export const UserName = styled.span`
 export const ChatArea = styled.div`
   flex: 1;
   overflow-y: auto;
-  padding: 120px 80px 200px 80px;
+  padding: 140px 80px 200px 80px;
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -151,12 +151,12 @@ export const ChatArea = styled.div`
   -webkit-overflow-scrolling: touch;
 
   @media (max-width: 768px) {
-    padding: 120px 40px 200px 40px;
+    padding: 140px 40px 200px 40px;
     max-width: 900px;
   }
 
   @media (max-width: 480px) {
-    padding: 120px 20px 200px 20px;
+    padding: 140px 20px 200px 20px;
     gap: 20px;
   }
 `;
@@ -252,7 +252,7 @@ export const Timestamp = styled.div`
 
 export const InputContainer = styled.div<{ $isCentered?: boolean }>`
   padding: ${props => props.$isCentered ? '0 80px' : '0 80px 60px 80px'};
-  background: #000000;
+  background: ${props => props.$isCentered ? 'transparent' : '#000000'};
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -260,16 +260,14 @@ export const InputContainer = styled.div<{ $isCentered?: boolean }>`
   margin: 0 auto;
   width: 100%;
   box-sizing: border-box;
-  position: fixed;
+  position: ${props => props.$isCentered ? 'static' : 'fixed'};
   bottom: ${props => props.$isCentered ? 'auto' : '0'};
-  top: ${props => props.$isCentered ? '50%' : 'auto'};
-  left: 50%;
-  transform: ${props => props.$isCentered ? 'translate(-50%, -50%)' : 'translate(-50%, 0)'};
-  transition: top 1s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
-              transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-              bottom 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  z-index: ${props => props.$isCentered ? '100' : '50'};
-  will-change: top, transform, bottom;
+  top: ${props => props.$isCentered ? 'auto' : 'auto'};
+  left: ${props => props.$isCentered ? 'auto' : '50%'};
+  transform: ${props => props.$isCentered ? 'none' : 'translate(-50%, 0)'};
+  transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  z-index: ${props => props.$isCentered ? '10' : '50'};
+  will-change: transform;
 
   @media (max-width: 768px) {
     padding: ${props => props.$isCentered ? '0 40px' : '0 40px 40px 40px'};
@@ -628,6 +626,236 @@ export const NavButton = styled.button`
   svg {
     width: 16px;
     height: 16px;
+  }
+`;
+
+// Welcome Screen Components
+export const WelcomeContainer = styled.div<{ $theme?: 'light' | 'dark' }>`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 140px 80px 40px 80px;
+  text-align: center;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+  min-height: 100vh;
+  background-image: ${props => props.$theme === 'light'
+    ? `radial-gradient(circle at 20% 80%, rgba(74, 222, 128, 0.05) 0%, transparent 50%),
+       radial-gradient(circle at 80% 20%, rgba(74, 222, 128, 0.03) 0%, transparent 50%),
+       radial-gradient(circle at 50% 50%, rgba(74, 222, 128, 0.02) 0%, transparent 70%)`
+    : `radial-gradient(circle at 20% 80%, rgba(74, 222, 128, 0.1) 0%, transparent 50%),
+       radial-gradient(circle at 80% 20%, rgba(74, 222, 128, 0.05) 0%, transparent 50%),
+       radial-gradient(circle at 50% 50%, rgba(74, 222, 128, 0.03) 0%, transparent 70%)`};
+  
+  @media (max-width: 768px) {
+    padding: 140px 40px 40px 40px;
+    max-width: 900px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 140px 20px 40px 20px;
+  }
+`;
+
+export const WelcomeHeader = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 40px;
+  width: 100%;
+`;
+
+export const WelcomeTitle = styled.h1<{ $theme?: 'light' | 'dark' }>`
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: ${props => props.$theme === 'light' ? 'rgba(0, 0, 0, 0.95)' : 'rgba(255, 255, 255, 0.95)'};
+  margin-bottom: 16px;
+  font-family: 'Inter', sans-serif;
+  transition: color 0.3s ease;
+  
+  @media (max-width: 768px) {
+    font-size: 2rem;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 1.75rem;
+  }
+`;
+
+export const WelcomeSubtitle = styled.p<{ $theme?: 'light' | 'dark' }>`
+  font-size: 1.125rem;
+  color: ${props => props.$theme === 'light' ? 'rgba(0, 0, 0, 0.7)' : 'rgba(255, 255, 255, 0.7)'};
+  margin-bottom: 40px;
+  line-height: 1.6;
+  max-width: 600px;
+  transition: color 0.3s ease;
+  
+  @media (max-width: 768px) {
+    font-size: 1rem;
+    margin-bottom: 32px;
+  }
+`;
+
+export const SuggestionsContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  width: 100%;
+  max-width: 900px;
+  margin-bottom: 40px;
+  
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+`;
+
+export const SuggestionCard = styled.button<{ $theme?: 'light' | 'dark' }>`
+  background: ${props => props.$theme === 'light' ? 'rgba(255, 255, 255, 0.8)' : 'rgba(255, 255, 255, 0.05)'};
+  border: 1px solid ${props => props.$theme === 'light' ? 'rgba(0, 0, 0, 0.1)' : 'rgba(255, 255, 255, 0.1)'};
+  border-radius: 16px;
+  padding: 20px;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(10px);
+  
+  &:hover {
+    background: ${props => props.$theme === 'light' ? 'rgba(255, 255, 255, 0.95)' : 'rgba(255, 255, 255, 0.08)'};
+    border-color: rgba(74, 222, 128, 0.3);
+    transform: translateY(-2px);
+    box-shadow: ${props => props.$theme === 'light' ? '0 8px 32px rgba(0, 0, 0, 0.1)' : '0 8px 32px rgba(0, 0, 0, 0.3)'};
+  }
+  
+  &:active {
+    transform: translateY(-1px);
+  }
+`;
+
+export const SuggestionIcon = styled.div`
+  font-size: 1.5rem;
+  margin-bottom: 12px;
+`;
+
+export const SuggestionTitle = styled.h3<{ $theme?: 'light' | 'dark' }>`
+  font-size: 1rem;
+  font-weight: 600;
+  color: ${props => props.$theme === 'light' ? 'rgba(0, 0, 0, 0.9)' : 'rgba(255, 255, 255, 0.9)'};
+  margin-bottom: 8px;
+  font-family: 'Inter', sans-serif;
+  transition: color 0.3s ease;
+`;
+
+export const SuggestionDescription = styled.p<{ $theme?: 'light' | 'dark' }>`
+  font-size: 0.875rem;
+  color: ${props => props.$theme === 'light' ? 'rgba(0, 0, 0, 0.6)' : 'rgba(255, 255, 255, 0.6)'};
+  line-height: 1.4;
+  margin: 0;
+  transition: color 0.3s ease;
+`;
+
+export const MainInputContainer = styled.div<{ $isCentered?: boolean; $isLarge?: boolean }>`
+  width: 100%;
+  max-width: ${props => props.$isLarge ? '900px' : '500px'};
+  margin: 0 auto 40px auto;
+`;
+
+export const MainInputWrapper = styled.div<{ $isLarge?: boolean; $theme?: 'light' | 'dark' }>`
+  position: relative;
+  display: flex;
+  align-items: center;
+  border: 1px solid ${props => props.$theme === 'light' ? 'rgba(0, 0, 0, 0.15)' : 'rgba(255, 255, 255, 0.15)'};
+  border-radius: ${props => props.$isLarge ? '32px' : '28px'};
+  padding: ${props => props.$isLarge ? '16px 20px' : '12px 16px'};
+  background: ${props => props.$theme === 'light' ? 'rgba(255, 255, 255, 0.9)' : 'rgba(40, 40, 40, 0.8)'};
+  backdrop-filter: blur(20px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: ${props => props.$theme === 'light' ? '0 4px 24px rgba(0, 0, 0, 0.1)' : '0 4px 24px rgba(0, 0, 0, 0.4)'};
+  min-height: ${props => props.$isLarge ? '72px' : '56px'};
+
+  &:focus-within {
+    border-color: rgba(74, 222, 128, 0.4);
+    background: ${props => props.$theme === 'light' ? 'rgba(255, 255, 255, 1)' : 'rgba(45, 45, 45, 0.85)'};
+    box-shadow: ${props => props.$theme === 'light'
+    ? '0 0 0 3px rgba(74, 222, 128, 0.1), 0 8px 32px rgba(0, 0, 0, 0.15)'
+    : '0 0 0 3px rgba(74, 222, 128, 0.1), 0 8px 32px rgba(0, 0, 0, 0.5)'};
+    animation: greenPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes greenPulse {
+    0%, 100% {
+      box-shadow: ${props => props.$theme === 'light'
+    ? '0 0 0 3px rgba(74, 222, 128, 0.1), 0 8px 32px rgba(0, 0, 0, 0.15)'
+    : '0 0 0 3px rgba(74, 222, 128, 0.1), 0 8px 32px rgba(0, 0, 0, 0.5)'};
+    }
+    50% {
+      box-shadow: ${props => props.$theme === 'light'
+    ? '0 0 0 3px rgba(74, 222, 128, 0.15), 0 8px 32px rgba(0, 0, 0, 0.15)'
+    : '0 0 0 3px rgba(74, 222, 128, 0.15), 0 8px 32px rgba(0, 0, 0, 0.5)'};
+    }
+  }
+`;
+
+export const MainInput = styled.input<{ $isLarge?: boolean; $theme?: 'light' | 'dark' }>`
+  flex: 1;
+  padding: ${props => props.$isLarge ? '12px 16px' : '8px 12px'};
+  border: none;
+  outline: none;
+  font-size: ${props => props.$isLarge ? '1.125rem' : '1rem'};
+  background: transparent;
+  color: ${props => props.$theme === 'light' ? 'rgba(0, 0, 0, 0.95)' : 'rgba(255, 255, 255, 0.95)'};
+  font-weight: 400;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  line-height: 1.5;
+  transition: color 0.3s ease;
+
+  &::placeholder {
+    color: ${props => props.$theme === 'light' ? 'rgba(0, 0, 0, 0.4)' : 'rgba(255, 255, 255, 0.4)'};
+  }
+
+  &:focus {
+    color: ${props => props.$theme === 'light' ? '#000000' : '#ffffff'};
+  }
+`;
+
+export const MainSendButton = styled.button<{ $isLarge?: boolean }>`
+  background: transparent;
+  color: rgba(255, 255, 255, 0.6);
+  border: none;
+  padding: ${props => props.$isLarge ? '12px' : '8px'};
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  width: ${props => props.$isLarge ? '48px' : '40px'};
+  height: ${props => props.$isLarge ? '48px' : '40px'};
+  flex-shrink: 0;
+
+  &:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  &:active:not(:disabled) {
+    transform: scale(0.95);
+  }
+
+  &:disabled {
+    color: rgba(255, 255, 255, 0.3);
+    cursor: not-allowed;
+  }
+
+  svg {
+    width: ${props => props.$isLarge ? '24px' : '20px'};
+    height: ${props => props.$isLarge ? '24px' : '20px'};
   }
 `;
 
