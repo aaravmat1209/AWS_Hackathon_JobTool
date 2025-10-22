@@ -29,10 +29,6 @@ import {
 const PageContainer = styled.div`
   min-height: 100vh;
   background: #000000;
-  background-image: 
-    radial-gradient(circle at 20% 80%, rgba(74, 222, 128, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(74, 222, 128, 0.05) 0%, transparent 50%),
-    radial-gradient(circle at 50% 50%, rgba(74, 222, 128, 0.03) 0%, transparent 70%);
   overflow-x: hidden;
   position: relative;
 `;

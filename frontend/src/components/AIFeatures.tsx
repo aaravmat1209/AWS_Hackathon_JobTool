@@ -48,7 +48,7 @@ const ChatWrapper = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 1.5rem;
   margin: 0 auto;
 `;
 
@@ -70,64 +70,19 @@ const ChatBubble = styled(motion.div)`
 const UserBubble = styled(ChatBubble)`
   background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%);
   color: white;
-  border-radius: 18px 18px 4px 18px;
+  border-radius: 20px 20px 4px 20px;
   align-self: flex-end;
   margin-left: auto;
   position: relative;
-  
-  &::before {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    right: -7px;
-    width: 20px;
-    height: 25px;
-    background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%);
-    border-bottom-left-radius: 16px 14px;
-  }
-  
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    right: -8px;
-    width: 10px;
-    height: 25px;
-    background: #000000;
-    border-bottom-left-radius: 10px;
-  }
 `;
 
 const AIBubble = styled(ChatBubble)`
   background: rgba(255, 255, 255, 0.12);
   backdrop-filter: blur(10px);
   color: white;
-  border-radius: 18px 18px 18px 4px;
+  border-radius: 20px 20px 20px 4px;
   align-self: flex-start;
   position: relative;
-  
-  &::before {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: -7px;
-    width: 20px;
-    height: 25px;
-    background: rgba(255, 255, 255, 0.12);
-    backdrop-filter: blur(10px);
-    border-bottom-right-radius: 16px 14px;
-  }
-  
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: -8px;
-    width: 10px;
-    height: 25px;
-    background: #000000;
-    border-bottom-right-radius: 10px;
-  }
 `;
 
 

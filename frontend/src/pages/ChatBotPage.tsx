@@ -39,9 +39,6 @@ import {
   WelcomeSubtitle,
   SuggestionsContainer,
   SuggestionCard,
-  SuggestionIcon,
-  SuggestionTitle,
-  SuggestionDescription,
   MainInputContainer,
   MainInputWrapper,
   MainInput,
@@ -178,37 +175,37 @@ const ChatBotPage: React.FC = () => {
     // Suggestion data for the welcome screen
     const suggestions = [
         {
-            icon: "💼",
+            icon: "",
             title: "Find Job Opportunities",
             description: "Search for jobs that match your skills and experience",
             query: "Find me job opportunities in my field"
         },
         {
-            icon: "📝",
+            icon: "",
             title: "Resume Review",
             description: "Get feedback on your resume and improve it",
             query: "Can you review my resume and give me feedback?"
         },
         {
-            icon: "🎯",
+            icon: "",
             title: "Career Guidance",
             description: "Get personalized career advice and next steps",
             query: "What career advice do you have for me?"
         },
         {
-            icon: "💡",
+            icon: "",
             title: "Interview Preparation",
             description: "Practice interview questions and get tips",
             query: "Help me prepare for job interviews"
         },
         {
-            icon: "🚀",
+            icon: "",
             title: "Skill Development",
             description: "Learn about skills to advance your career",
             query: "What skills should I develop for my career?"
         },
         {
-            icon: "🌟",
+            icon: "",
             title: "Industry Insights",
             description: "Get insights about your industry and trends",
             query: "Tell me about current trends in my industry"
@@ -336,7 +333,7 @@ const ChatBotPage: React.FC = () => {
                     // Create welcome message with job recommendations
                     const welcomeMessage: Message = {
                         id: Date.now(),
-                        text: `👋 Welcome back! Here are your personalized **${recommendations.jobCategory.replace('-', ' ')}** job recommendations from ${new Date(recommendations.createdAt).toLocaleDateString('en-US', {
+                        text: `Welcome back! Here are your personalized **${recommendations.jobCategory.replace('-', ' ')}** job recommendations from ${new Date(recommendations.createdAt).toLocaleDateString('en-US', {
                             weekday: 'long',
                             year: 'numeric',
                             month: 'long',
@@ -822,7 +819,7 @@ const ChatBotPage: React.FC = () => {
                 {!hasStartedConversation && messages.length === 0 && (
                     <WelcomeContainer>
                         <WelcomeHeader>
-                            <WelcomeTitle>Hello {userName}! 👋</WelcomeTitle>
+                            <WelcomeTitle>Hello {userName}!</WelcomeTitle>
                             <WelcomeSubtitle>
                                 I'm your AI career assistant. I can help you find jobs, improve your resume, 
                                 prepare for interviews, and provide personalized career guidance.
@@ -855,9 +852,7 @@ const ChatBotPage: React.FC = () => {
                                     key={index}
                                     onClick={() => handleSuggestionClick(suggestion.query)}
                                 >
-                                    <SuggestionIcon>{suggestion.icon}</SuggestionIcon>
-                                    <SuggestionTitle>{suggestion.title}</SuggestionTitle>
-                                    <SuggestionDescription>{suggestion.description}</SuggestionDescription>
+                                    {suggestion.title}
                                 </SuggestionCard>
                             ))}
                         </SuggestionsContainer>

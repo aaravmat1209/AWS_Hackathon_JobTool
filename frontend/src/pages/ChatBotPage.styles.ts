@@ -698,67 +698,53 @@ export const WelcomeSubtitle = styled.p<{ $theme?: 'light' | 'dark' }>`
 `;
 
 export const SuggestionsContainer = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
   width: 100%;
   max-width: 900px;
   margin-bottom: 40px;
+  justify-content: center;
   
   @media (max-width: 768px) {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-  }
-  
-  @media (max-width: 480px) {
-    grid-template-columns: 1fr;
-    gap: 12px;
+    gap: 10px;
   }
 `;
 
 export const SuggestionCard = styled.button<{ $theme?: 'light' | 'dark' }>`
-  background: ${props => props.$theme === 'light' ? 'rgba(255, 255, 255, 0.8)' : 'rgba(255, 255, 255, 0.05)'};
-  border: 1px solid ${props => props.$theme === 'light' ? 'rgba(0, 0, 0, 0.1)' : 'rgba(255, 255, 255, 0.1)'};
-  border-radius: 16px;
-  padding: 20px;
-  text-align: left;
+  background: ${props => props.$theme === 'light' ? 'rgba(255, 255, 255, 0.9)' : 'rgba(255, 255, 255, 0.08)'};
+  border: 1px solid ${props => props.$theme === 'light' ? 'rgba(0, 0, 0, 0.12)' : 'rgba(255, 255, 255, 0.15)'};
+  border-radius: 24px;
+  padding: 12px 20px;
+  text-align: center;
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   backdrop-filter: blur(10px);
+  white-space: nowrap;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: ${props => props.$theme === 'light' ? 'rgba(0, 0, 0, 0.85)' : 'rgba(255, 255, 255, 0.85)'};
+  font-family: 'Inter', sans-serif;
   
   &:hover {
-    background: ${props => props.$theme === 'light' ? 'rgba(255, 255, 255, 0.95)' : 'rgba(255, 255, 255, 0.08)'};
-    border-color: rgba(74, 222, 128, 0.3);
-    transform: translateY(-2px);
-    box-shadow: ${props => props.$theme === 'light' ? '0 8px 32px rgba(0, 0, 0, 0.1)' : '0 8px 32px rgba(0, 0, 0, 0.3)'};
+    background: ${props => props.$theme === 'light' ? 'rgba(255, 255, 255, 1)' : 'rgba(255, 255, 255, 0.12)'};
+    border-color: ${props => props.$theme === 'light' ? 'rgba(0, 0, 0, 0.2)' : 'rgba(255, 255, 255, 0.25)'};
+    transform: translateY(-1px);
+    box-shadow: ${props => props.$theme === 'light' ? '0 4px 12px rgba(0, 0, 0, 0.08)' : '0 4px 12px rgba(0, 0, 0, 0.3)'};
   }
   
   &:active {
-    transform: translateY(-1px);
+    transform: scale(0.98);
+  }
+  
+  @media (max-width: 768px) {
+    font-size: 0.875rem;
+    padding: 10px 16px;
   }
 `;
 
-export const SuggestionIcon = styled.div`
-  font-size: 1.5rem;
-  margin-bottom: 12px;
-`;
 
-export const SuggestionTitle = styled.h3<{ $theme?: 'light' | 'dark' }>`
-  font-size: 1rem;
-  font-weight: 600;
-  color: ${props => props.$theme === 'light' ? 'rgba(0, 0, 0, 0.9)' : 'rgba(255, 255, 255, 0.9)'};
-  margin-bottom: 8px;
-  font-family: 'Inter', sans-serif;
-  transition: color 0.3s ease;
-`;
 
-export const SuggestionDescription = styled.p<{ $theme?: 'light' | 'dark' }>`
-  font-size: 0.875rem;
-  color: ${props => props.$theme === 'light' ? 'rgba(0, 0, 0, 0.6)' : 'rgba(255, 255, 255, 0.6)'};
-  line-height: 1.4;
-  margin: 0;
-  transition: color 0.3s ease;
-`;
 
 export const MainInputContainer = styled.div<{ $isCentered?: boolean; $isLarge?: boolean }>`
   width: 100%;
