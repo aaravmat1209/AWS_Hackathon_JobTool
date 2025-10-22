@@ -57,7 +57,7 @@ It integrates **real-time user interactions** (via live search) with **automated
 ## 🏗️ Architecture Diagram
 
 <p align="center">
-  <img width="1100" height="950" alt="JOB SEARCH ARCHITECTURE DIAGRAM" src="https://github.com/user-attachments/assets/c3e3a995-07db-43f9-88f7-6fcd9af1a264" />
+  <img width="900" height="950" alt="JOB SEARCH ARCHITECTURE DIAGRAM" src="https://github.com/user-attachments/assets/c3e3a995-07db-43f9-88f7-6fcd9af1a264" />
 </p>
 
 ### 🔍 Architecture Overview
