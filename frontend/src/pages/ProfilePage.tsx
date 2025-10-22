@@ -140,12 +140,7 @@ const ProfileHeader = styled.div`
 `;
 
 const Avatar = styled.div`
-  width: 82px; height: 82px; margin: 0 auto 16px;
-  border-radius: 999px; background: var(--asu-maroon);
-  display: grid; place-items: center;
-  background-image: url(${myProfileImage});
-  background-size: cover;
-  background-position: center;
+  display: none;
 `;
 
 const Heading = styled(motion.h2)`
