@@ -268,7 +268,7 @@ export const InputContainer = styled.div<{ $isCentered?: boolean }>`
   transition: top 1s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
               transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94),
               bottom 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  z-index: ${props => props.$isCentered ? '100' : 'auto'};
+  z-index: ${props => props.$isCentered ? '100' : '50'};
   will-change: top, transform, bottom;
 
   @media (max-width: 768px) {
