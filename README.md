@@ -1,232 +1,159 @@
-# AI-Powered Job Search Assistant
+# 🧠 Agentic Job Search – AI-Powered Career Assistant
 
-A comprehensive chatbot application that provides intelligent job search and career guidance, powered by AWS Bedrock AgentCore and cutting-edge AI technologies.
-
-## 🎯 Overview
-
-This application combines natural language processing capabilities with intelligent job matching to deliver accurate, context-aware responses to user queries. Built on a serverless architecture with real-time communication, secure file management, and automated daily job recommendations.
-
-### ✨ Key Features
-
-- **🤖 Multi-Agent AI System** powered by AWS Bedrock with Claude 4.5 Sonnet
-- **🧠 AgentCore Memory Integration** for cross-session conversation continuity
-- **📧 Automated Daily Job Recommendations** via email and SMS
-- **📄 AI Resume Parsing** with personalized job matching
-- **💬 Real-time Chat Interface** with streaming responses
-- **🎯 Intelligent Job Fit Analysis** using semantic search and AI models
-- **🌙 Dark Theme UI** with responsive design
-- **📱 Mobile-Friendly Interface** optimized for all devices
-
-## 🏗️ Architecture
-
-The application implements a serverless, event-driven architecture with a multi-agent AI system at its core, combining real-time user interactions with automated batch processing for job matching.
-<img width="1451" height="1579" alt="JOB SEARCH ARCHITECTURE DIAGRAM drawio" src="https://github.com/user-attachments/assets/c3e3a995-07db-43f9-88f7-6fcd9af1a264" />
-
-
-### Core Components
-
-- **Frontend**: React.js with TypeScript and styled-components
-- **Backend**: AWS Lambda functions with Node.js
-- **AI Engine**: AWS Bedrock AgentCore with Claude 4.5 Sonnet
-- **Database**: Amazon DynamoDB for user profiles and job data
-- **Storage**: Amazon S3 for resume storage and processing
-- **Authentication**: AWS Cognito for secure user management
-- **Notifications**: Amazon SES and SNS for email/SMS delivery
-
-## 🚀 Getting Started
-
-### Prerequisites
-
-- Node.js 18+ and npm
-- AWS CLI configured with appropriate permissions
-- AWS CDK installed globally
-- Valid AWS account with Bedrock access
-
-### Installation
-
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/SayantikaPaul-12/AWS_Hackathon_JobTool.git
-   cd AWS_Hackathon_JobTool
-   ```
-
-2. **Install frontend dependencies**
-   ```bash
-   cd frontend
-   npm install
-   ```
-
-3. **Configure environment variables**
-   ```bash
-   cp .env.example .env
-   # Update .env with your AWS configuration
-   ```
-
-4. **Start the development server**
-   ```bash
-   npm start
-   ```
-
-The application will be available at `http://localhost:3000`
-
-## 💻 Usage
-
-### For Job Seekers
-
-1. **Profile Setup**: Upload your resume and complete your profile
-2. **Chat Interface**: Ask questions about job opportunities, career advice, or interview preparation
-3. **Job Recommendations**: Receive personalized job matches based on your profile
-4. **Resume Review**: Get AI-powered feedback on your resume
-5. **Interview Prep**: Practice with AI-generated interview questions
-
-### Chat Commands
-
-- "Find me job opportunities in [field]"
-- "Review my resume and give feedback"
-- "Help me prepare for interviews"
-- "What skills should I develop for my career?"
-- "Tell me about current trends in [industry]"
-
-## 🎨 Features
-
-### Intelligent Chatbot
-- Natural language processing for career-related queries
-- Context-aware responses with conversation memory
-- Streaming responses for real-time interaction
-- Multi-turn conversations with session persistence
-
-### Job Matching Engine
-- AI-powered job fit analysis
-- Semantic search across job descriptions
-- Personalized recommendations based on skills and experience
-- Real-time job market insights
-
-### Resume Processing
-- Automated resume parsing and analysis
-- Skills extraction and gap analysis
-- Formatting and improvement suggestions
-- ATS-friendly optimization tips
-
-### User Experience
-- Clean, modern dark theme interface
-- Responsive design for all devices
-- Intuitive navigation and user flow
-- Accessibility-compliant components
-
-## 🛠️ Technology Stack
-
-### Frontend
-- **React 18** with TypeScript
-- **Styled Components** for styling
-- **Framer Motion** for animations
-- **React Router** for navigation
-- **Lucide React** for icons
-
-### Backend & AI
-- **AWS Bedrock AgentCore** for AI orchestration
-- **Claude 4.5 Sonnet** for natural language processing
-- **AWS Lambda** for serverless functions
-- **Amazon DynamoDB** for data storage
-- **Amazon S3** for file storage
-
-### Infrastructure
-- **AWS CDK** for infrastructure as code
-- **Amazon CloudFront** for content delivery
-- **AWS Cognito** for authentication
-- **Amazon SES/SNS** for notifications
-
-## 📁 Project Structure
-
-```
-AWS_Hackathon_JobTool/
-├── frontend/                 # React frontend application
-│   ├── src/
-│   │   ├── components/      # Reusable UI components
-│   │   ├── pages/          # Page components
-│   │   ├── services/       # API service functions
-│   │   ├── contexts/       # React contexts
-│   │   └── utils/          # Utility functions
-│   ├── public/             # Static assets
-│   └── package.json        # Frontend dependencies
-├── backend/                # AWS Lambda functions
-├── infrastructure/         # AWS CDK infrastructure code
-├── docs/                  # Documentation files
-└── README.md              # This file
-```
-
-## 🔧 Configuration
-
-### Environment Variables
-
-Create a `.env` file in the frontend directory:
-
-```env
-REACT_APP_AGENT_RUNTIME_ARN=your-bedrock-agent-arn
-REACT_APP_AGENT_QUALIFIER=DEFAULT
-REACT_APP_AWS_REGION=us-west-2
-REACT_APP_RESUME_PROCESSOR_URL=your-lambda-url
-REACT_APP_SAVE_PROFILE_URL=your-profile-lambda-url
-REACT_APP_RESUME_BUCKET=your-s3-bucket-name
-REACT_APP_JOB_RECOMMENDATIONS_API_URL=your-api-gateway-url
-REACT_APP_COGNITO_IDENTITY_POOL_ID=your-cognito-pool-id
-REACT_APP_AGENT_PROXY_URL=your-agent-proxy-url
-```
-
-## 🚀 Deployment
-
-1. **Build the frontend**
-   ```bash
-   cd frontend
-   npm run build
-   ```
-
-2. **Deploy infrastructure**
-   ```bash
-   cd infrastructure
-   cdk deploy
-   ```
-
-3. **Configure post-deployment settings**
-   - Update Bedrock agent configurations
-   - Set up notification preferences
-   - Configure job data sources
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 👥 Credits
-
-This application was architected and developed by:
-- [Aryan Khanna](https://www.linkedin.com/in/aryankhanna2004/)
-- [Aarav Matalia](https://www.linkedin.com/in/aarav-matalia/)
-- [Sayantika Paul](https://www.linkedin.com/in/sayantikapaul12/)
-
-## 🆘 Support
-
-If you encounter any issues or have questions:
-
-1. Check the [Issues](https://github.com/SayantikaPaul-12/AWS_Hackathon_JobTool/issues) page
-2. Create a new issue with detailed information
-3. Contact the development team
-
-## 🔮 Future Enhancements
-
-- [ ] Multi-language support
-- [ ] Advanced analytics dashboard
-- [ ] Integration with job boards APIs
-- [ ] Video interview preparation
-- [ ] Salary negotiation guidance
-- [ ] Career path visualization
+A comprehensive, intelligent job search assistant that empowers students with personalized job recommendations, resume-based career insights, and automated daily notifications — built using **AWS Bedrock AgentCore**, **Nova Pro**, and **event-driven serverless architecture**.
 
 ---
 
-**Built with 💡 innovation and ⚡ cutting-edge AI technologies.**
+## 🎥 Demo Video
+
+<p align="center">
+  <a href="https://www.youtube.com/watch?v=4EIM9nCceco">
+    <img src="https://markdown-videos-api.jorgenkh.no/youtube/4EIM9nCceco?width=640&height=360&filetype=jpeg" alt="Demo Video"/>
+  </a>
+</p>
+
+---
+
+## 📘 Index
+
+| Description | Link |
+|-------------|------|
+| Overview | [Overview](#overview) |
+| Architecture | [Architecture](#architecture-diagram) |
+| Detailed Architecture | [Detailed Architecture](docs/ARCHITECTURE.MD) |
+| User Flow | [User Flow](docs/USERFLOW.md) |
+| SMS Prerequisites | [SMS Prerequisites](docs/SMS_PREREQUISITES.md) |
+| Deployment | [Deployment](docs/DEPLOYMENT.MD) |
+| Post-Deployment Setup | [Post-Deployment Setup](docs/POST_DEPLOYMENT_SETUP.md) |
+| Infrastructure | [Infrastructure](docs/INFRASTRUCTURE.MD) |
+| Modification Guide | [Modification Guide](#modification-guide) |
+| Credits | [Credits](#credits) |
+| License | [License](#license) |
+
+---
+
+## 🧩 Overview
+
+The **Agentic Job Search Assistant** leverages AWS Bedrock’s agentic capabilities to automate the end-to-end student job search process — from **resume parsing** to **daily career recommendations**.
+
+It integrates **real-time user interactions** (via live search) with **automated batch processes** (for job matching and communication), providing a seamless and intelligent job discovery experience.
+
+### 🌟 Key Features
+- **Multi-Agent System (AgentCore):**  
+  Includes a *Routing Agent*, *Career Exploration Agent*, and *Job Search Agent* for modular and dynamic decision-making.
+- **AI-Powered Resume Parsing:**  
+  Extracts key entities and skills using **Nova Pro** and stores structured student profiles in DynamoDB.
+- **Automated Notifications:**  
+  Sends **daily job updates via AWS SES (email)** and **SNS (SMS)**.
+- **Event-Driven Architecture:**  
+  Uses **Amazon EventBridge** and **SQS** for time-triggered and asynchronous job processing.
+- **Knowledge Graph + RAG:**  
+  Combines **Bedrock Knowledge Base**, **Graph RAG**, and **Neptune Graph** for context-aware job matching and career exploration.
+- **Secure File Storage:**  
+  User resumes and resources are securely managed in **Amazon S3**.
+
+---
+
+## 🏗️ Architecture Diagram
+
+<p align="center">
+  <img width="1100" height="950" alt="JOB SEARCH ARCHITECTURE DIAGRAM" src="https://github.com/user-attachments/assets/c3e3a995-07db-43f9-88f7-6fcd9af1a264" />
+</p>
+
+### 🔍 Architecture Overview
+
+The system is divided into three main modules:
+
+#### 1. **Live Search**
+- Students upload resumes → stored in **Amazon S3**.  
+- **Lambda + Nova Pro** parses resumes and extracts skills.  
+- Processed profiles are stored via API Gateway → DynamoDB.  
+- AgentCore runtime routes user queries to the appropriate agent:
+  - **Career Exploration Agent:** Provides insights and skill-based recommendations.  
+  - **Job Search Agent:** Fetches job postings and returns AI-filtered results.
+
+#### 2. **Job Search Batch Process**
+- Triggered daily via **Amazon EventBridge**.  
+- Lambda adds new student job search tasks to **Amazon SQS** queue.  
+- Another Lambda processes queued tasks to perform job searches and updates DynamoDB with results.
+
+#### 3. **Communication Batch Process**
+- Triggered daily at configurable times (e.g., 9 AM).  
+- Fetches new job recommendations from DynamoDB.  
+- Sends personalized **email and SMS notifications** using:
+  - **Amazon SES (Email Service)**  
+  - **Amazon SNS (SMS Service)**
+
+#### 4. **Knowledge Infrastructure**
+- **Bedrock Knowledge Base** connects with:
+  - **S3 Vector Store:** Stores semantic embeddings of career resources.  
+  - **Neptune Graph:** Stores relational data between jobs, skills, and industries.  
+  - **Graph RAG:** Enhances contextual retrieval for AI-driven responses.
+
+---
+
+## 🚀 Deployment
+
+Follow the complete deployment guide here:  
+👉 [docs/DEPLOYMENT.MD](docs/DEPLOYMENT.MD)
+
+Includes setup for:
+- Lambda functions  
+- API Gateway routes  
+- Bedrock AgentCore configuration  
+- DynamoDB and Neptune initialization  
+- SQS and EventBridge scheduling  
+- SES/SNS permissions for notifications  
+
+---
+
+## 🧠 Post-Deployment Usage
+
+After successful deployment:
+1. Upload student resumes via the web interface.  
+2. Use **Live Search** for real-time job queries.  
+3. Receive **daily job recommendations** via email and SMS.  
+4. Explore personalized **career resources** powered by Graph RAG.
+
+For detailed steps → [Post Deployment Setup](docs/POST_DEPLOYMENT_SETUP.md)
+
+---
+
+## ⚙️ Infrastructure Overview
+
+The entire system is **serverless** and **event-driven**, leveraging:
+- **Compute:** AWS Lambda  
+- **Storage:** S3, DynamoDB  
+- **AI Models:** Bedrock (Claude Sonnet, Nova Pro)  
+- **Messaging:** SQS, SNS, SES  
+- **Graph & RAG:** Neptune Graph, Bedrock Knowledge Base  
+- **Automation:** EventBridge
+
+See full infrastructure details in [docs/INFRASTRUCTURE.MD](docs/INFRASTRUCTURE.MD).
+
+---
+
+## 🧭 Modification Guide
+
+You can easily extend or modify:
+- **LLM Models:** Swap Bedrock models (e.g., Nova Pro → Claude 3.5 Sonnet).  
+- **Notification Logic:** Add more conditions or new channels (Slack, Teams).  
+- **Agent Behavior:** Adjust Routing Agent logic to support new intents.  
+
+See [docs/modificationGuide.md](docs/modificationGuide.md) for instructions.
+
+---
+
+## 👩‍💻 Credits
+
+Developed by the **ASU Career Services AI Team** in collaboration with **AWS AI Cloud Innovation Center**.  
+**Contributors:**
+- [Sayantika Paul](https://www.linkedin.com/in/sayantikapaul12/)  
+- [Aryan Khanna](https://www.linkedin.com/in/aryankhanna2004/)  
+- [Aarav Matalia](https://www.linkedin.com/in/aarav-matalia/)
+
+---
+
+## 📜 License
+
+Licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
