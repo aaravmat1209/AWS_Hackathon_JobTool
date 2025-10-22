@@ -1,6 +1,6 @@
 # Post-Deployment Setup Guide
 
-After your deployment is complete (whether via **CodeBuild** or **Manual CDK**), follow these steps to fully configure your AI-Powered ASU Job Search Assistant.
+After your deployment is complete (whether via **CodeBuild** or **Manual CDK**), follow these steps to fully configure your AI-Powered Job Search Assistant.
 
 ## Prerequisites
 

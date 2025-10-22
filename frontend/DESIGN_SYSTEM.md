@@ -394,7 +394,6 @@ When migrating existing components:
 2. **Replace pixel values** with spacing tokens
 3. **Standardize border radius** using borderRadius tokens
 4. **Update button styles** to use button variants
-5. **Remove ASU-specific branding** (maroon/gold colors)
 6. **Update font families** to use Inter/system fonts
 
 ---
