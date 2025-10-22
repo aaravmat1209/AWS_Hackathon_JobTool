@@ -10,6 +10,8 @@ const JobGridContainer = styled.div`
   gap: 8px;
   width: 100%;
   margin-top: 12px;
+  position: relative;
+  z-index: 10;
 
   @media (max-width: 480px) {
     padding: 0;

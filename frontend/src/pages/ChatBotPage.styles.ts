@@ -136,12 +136,12 @@ export const UserName = styled.span`
 export const ChatArea = styled.div`
   flex: 1;
   overflow-y: auto;
-  padding: 140px 80px 20px 80px;
+  padding: 120px 80px 200px 80px;
   display: flex;
   flex-direction: column;
   gap: 24px;
   scroll-behavior: smooth;
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
   width: 100%;
   position: relative;
@@ -151,11 +151,12 @@ export const ChatArea = styled.div`
   -webkit-overflow-scrolling: touch;
 
   @media (max-width: 768px) {
-    padding: 140px 40px 20px 40px;
+    padding: 120px 40px 200px 40px;
+    max-width: 900px;
   }
 
   @media (max-width: 480px) {
-    padding: 140px 20px 20px 20px;
+    padding: 120px 20px 200px 20px;
     gap: 20px;
   }
 `;
@@ -249,24 +250,34 @@ export const Timestamp = styled.div`
   display: none;
 `;
 
-export const InputContainer = styled.div`
-  padding: 20px 80px 40px 80px;
+export const InputContainer = styled.div<{ $isCentered?: boolean }>`
+  padding: ${props => props.$isCentered ? '0 80px' : '0 80px 60px 80px'};
   background: #000000;
   display: flex;
   flex-direction: column;
-  gap: 0;
-  max-width: 1200px;
+  gap: 16px;
+  max-width: 1400px;
   margin: 0 auto;
   width: 100%;
   box-sizing: border-box;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  position: fixed;
+  bottom: ${props => props.$isCentered ? 'auto' : '0'};
+  top: ${props => props.$isCentered ? '50%' : 'auto'};
+  left: 50%;
+  transform: ${props => props.$isCentered ? 'translate(-50%, -50%)' : 'translate(-50%, 0)'};
+  transition: top 1s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+              transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              bottom 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  z-index: ${props => props.$isCentered ? '100' : 'auto'};
+  will-change: top, transform, bottom;
 
   @media (max-width: 768px) {
-    padding: 20px 40px 30px 40px;
+    padding: ${props => props.$isCentered ? '0 40px' : '0 40px 40px 40px'};
+    max-width: 900px;
   }
 
   @media (max-width: 480px) {
-    padding: 16px 20px 24px 20px;
+    padding: ${props => props.$isCentered ? '0 20px' : '0 20px 30px 20px'};
   }
 `;
 
@@ -275,29 +286,43 @@ export const InputWrapper = styled.div`
   position: relative;
   display: flex;
   align-items: center;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 12px;
-  padding: 4px 4px 4px 16px;
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 28px;
+  padding: 12px 16px;
+  background: rgba(40, 40, 40, 0.8);
+  backdrop-filter: blur(20px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+  min-height: 56px;
 
   &:focus-within {
-    border-color: rgba(74, 222, 128, 0.5);
-    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(74, 222, 128, 0.4);
+    background: rgba(45, 45, 45, 0.85);
+    box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.1), 0 8px 32px rgba(0, 0, 0, 0.5);
+    animation: greenPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes greenPulse {
+    0%, 100% {
+      box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.1), 0 8px 32px rgba(0, 0, 0, 0.5);
+    }
+    50% {
+      box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.15), 0 8px 32px rgba(0, 0, 0, 0.5);
+    }
   }
 `;
 
 export const Input = styled.input`
   flex: 1;
-  padding: 12px 8px;
+  padding: 8px 12px;
   border: none;
   outline: none;
-  font-size: 0.9375rem;
+  font-size: 1rem;
   background: transparent;
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(255, 255, 255, 0.95);
   font-weight: 400;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  line-height: 1.5;
 
   &::placeholder {
     color: rgba(255, 255, 255, 0.4);
@@ -309,31 +334,37 @@ export const Input = styled.input`
 `;
 
 export const SendButton = styled.button`
-  background: rgba(74, 222, 128, 0.15);
-  color: #4ade80;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.6);
   border: none;
-  width: 36px;
-  height: 36px;
-  border-radius: 8px;
+  padding: 8px;
+  border-radius: 50%;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.1rem;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
 
-  &:hover {
-    background: rgba(74, 222, 128, 0.25);
+  &:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.9);
   }
 
-  &:active {
+  &:active:not(:disabled) {
     transform: scale(0.95);
   }
 
   &:disabled {
-    background: rgba(255, 255, 255, 0.05);
     color: rgba(255, 255, 255, 0.3);
     cursor: not-allowed;
+  }
+
+  svg {
+    width: 20px;
+    height: 20px;
   }
 `;
 
@@ -512,11 +543,10 @@ export const SourceLink = styled.a`
 
 export const InputHelperText = styled.div`
   font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.4);
-  text-align: left;
+  color: rgba(255, 255, 255, 0.3);
+  text-align: center;
   width: 100%;
-  margin-top: 8px;
-  padding-left: 16px;
+  margin-top: 12px;
   
   kbd {
     background: rgba(255, 255, 255, 0.1);
@@ -531,20 +561,73 @@ export const InputHelperText = styled.div`
 
 export const IconButton = styled.button`
   background: transparent;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.6);
   border: none;
-  width: 36px;
-  height: 36px;
-  border-radius: 8px;
+  padding: 8px;
+  border-radius: 50%;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  margin-right: 4px;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
 
   &:hover {
-    background: rgba(255, 255, 255, 0.05);
-    color: rgba(255, 255, 255, 0.7);
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  svg {
+    width: 20px;
+    height: 20px;
   }
 `;
+
+export const NavButtonsContainer = styled.div`
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  align-items: center;
+  flex-shrink: 0;
+  margin-left: auto;
+`;
+
+export const NavButton = styled.button`
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  font-family: 'Inter', sans-serif;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  white-space: nowrap;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.9);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+`;
+

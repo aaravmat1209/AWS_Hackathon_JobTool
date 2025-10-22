@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import { ASULogoImage, UserAvatarImage, BotAvatarImage } from '../components/ImageAssets';
-import { Mic, Send } from 'lucide-react';
+import { Home, User } from 'lucide-react';
 import { invokeAgent } from '../services/agentService';
 import { getJobRecommendations, parseSmsLinkParams } from '../services/jobRecommendationsService';
 import { getProfile } from '../services/profileService';
@@ -30,7 +30,9 @@ import {
   SourcesList,
   SourceLink,
   InputHelperText,
-  IconButton
+  IconButton,
+  NavButtonsContainer,
+  NavButton
 } from './ChatBotPage.styles';
 
 
@@ -157,12 +159,16 @@ const ChatBotPage: React.FC = () => {
     const [isLoadingRecommendations, setIsLoadingRecommendations] = useState(false);
     const [isLoadingJobs, setIsLoadingJobs] = useState(false); // Track job search loading state
     const [jobResultsReceived, setJobResultsReceived] = useState(false); // Track if job results were received
+    const [hasStartedConversation, setHasStartedConversation] = useState(false); // Track if user has started conversation
     const chatAreaRef = useRef<HTMLDivElement>(null);
 
     // Auto-scroll functionality - disabled after job results until new query
     useEffect(() => {
         if (chatAreaRef.current && !jobResultsReceived) {
-            chatAreaRef.current.scrollTop = chatAreaRef.current.scrollHeight;
+            chatAreaRef.current.scrollTo({
+                top: chatAreaRef.current.scrollHeight,
+                behavior: 'smooth'
+            });
         }
     }, [messages, isTyping, isLoadingJobs, jobResultsReceived]);
 
@@ -289,19 +295,26 @@ const ChatBotPage: React.FC = () => {
     const handleSendMessage = async () => {
         if (!inputValue.trim()) return;
 
+        const currentInput = inputValue;
+        setInputValue('');
+
+        // Mark that conversation has started - this triggers the smooth animation
+        setHasStartedConversation(true);
+
+        // Wait for the animation to complete before adding the message (1000ms transition)
+        await new Promise(resolve => setTimeout(resolve, 1000));
+
         // Starting new request - reset job results flag to re-enable auto-scroll
         setJobResultsReceived(false);
 
         const userMessage: Message = {
             id: Date.now() + Math.random(),
-            text: inputValue,
+            text: currentInput,
             isUser: true,
             timestamp: new Date()
         };
 
         setMessages(prev => [...prev, userMessage]);
-        const currentInput = inputValue;
-        setInputValue('');
 
         // Mark processing as started
         setIsProcessingComplete(false);
@@ -697,7 +710,10 @@ const ChatBotPage: React.FC = () => {
                     </div>
                 </div>
             ) : (
+                <>
                 <ChatArea ref={chatAreaRef}>
+                {messages.length === 0 && !isTyping ? null : (
+                    <>
                 {messages.map((message, index) => {
 
                     return (
@@ -842,33 +858,33 @@ const ChatBotPage: React.FC = () => {
                         </div>
                     </div>
                 )}
+                </>
+                )}
 
             </ChatArea>
+            </>
             )}
 
-            <InputContainer>
+            <InputContainer $isCentered={!hasStartedConversation}>
                 <InputWrapper>
                     <Input
                         type="text"
-                        placeholder="How can I help you today?"
+                        placeholder="Ask a question..."
                         value={inputValue}
                         onChange={(e) => setInputValue(e.target.value)}
                         onKeyPress={handleKeyPress}
                     />
-                    <IconButton title="Voice input">
-                        <Mic size={18} />
-                    </IconButton>
-                    <SendButton
-                        onClick={handleSendMessage}
-                        disabled={!inputValue.trim() || isTyping || !isProcessingComplete}
-                        title="Send message"
-                    >
-                        <Send size={16} />
-                    </SendButton>
+                    <NavButtonsContainer>
+                        <NavButton onClick={() => navigate('/')}>
+                            <Home size={16} />
+                            Home
+                        </NavButton>
+                        <NavButton onClick={handleProfileClick}>
+                            <User size={16} />
+                            Profile
+                        </NavButton>
+                    </NavButtonsContainer>
                 </InputWrapper>
-                <InputHelperText>
-                    Press <kbd>Enter</kbd> to send · <kbd>Shift</kbd>+<kbd>Enter</kbd> for newline
-                </InputHelperText>
             </InputContainer>
         </ChatContainer>
     );
