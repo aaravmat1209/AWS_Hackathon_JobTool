@@ -146,11 +146,10 @@ See [docs/modificationGuide.md](docs/modificationGuide.md) for instructions.
 
 ## 👩‍💻 Credits
 
-Developed by the **ASU Career Services AI Team** in collaboration with **AWS AI Cloud Innovation Center**.  
-**Contributors:**
-- [Sayantika Paul](https://www.linkedin.com/in/sayantikapaul12/)  
+Dsigned and developed by 
 - [Aryan Khanna](https://www.linkedin.com/in/aryankhanna2004/)  
 - [Aarav Matalia](https://www.linkedin.com/in/aarav-matalia/)
+- [Sayantika Paul](https://www.linkedin.com/in/sayantikapaul12/)  
 
 ---
 
