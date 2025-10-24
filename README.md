@@ -6,15 +6,13 @@ A comprehensive, intelligent job search assistant that empowers students with pe
 
 ## 🎥 Demo Video
 
-<p align="center">
-  <a href="https://youtu.be/px88H214UV4">
-    <img src="https://markdown-videos-api.jorgenkh.no/youtube/px88H214UV4?width=640&height=360&filetype=jpeg" alt="Demo Video"/>
-  </a>
-</p>
+https://github.com/user-attachments/assets/8a1ba484-ef33-4267-9e6e-cd1e468d2d06
 
 ---
 
 ## 📘 Index
+
+
 
 | Description | Link |
 |-------------|------|
